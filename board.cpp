@@ -12,80 +12,199 @@
 //tomotaoes
 using namespace std;
 
-void Board::initializeBoard() {
-// Seed random number generator in your main function once
-    for (int i = 0; i < 2; i++) {
-        initializeTiles(i); // This ensures each lane has a unique tile distribution
+//0 for cub path 1 for pride path
+void Board::initializeBoard(int player1, int player2) {
+    // Seed random number generator in your main function once
+    if (player1 == 0){
+        initializeCubPath(0);
+    } else {
+        initializePridePath(0);
+    }
+    if (player2 == 0){
+        initializeCubPath(1);
+    } else {
+        initializePridePath(1);
     }
 }
 
 #include <cstdlib> // For rand() and srand()
 #include <ctime> // For time()
 
-void Board::initializeTiles(int player_index) {
+void Board::initializeCubPath(int player_index) {
     Tile temp;
     int green_count = 0;
     int total_tiles = _BOARD_SIZE;
+    const int OASIS_LIMIT = 39; //amount of tiles before you no longer can find an oasis
+    const int GRAVEYARD_START = 13;
+
 // Keep track of green tile positions to ensure we place exactly 30 greens
     for (int i = 0; i < total_tiles; i++) {
         if (i == total_tiles - 1) {
             // Set the last tile as Orange for "Pride Rock"
             temp.color = 'O';
         } else if (i == 0) {
-            // Set the last tile as Orange for "Pride Rock"
+            // Set the starting tile Grey
             temp.color = 'Y';
         } else if (green_count < 30 && (rand() % (total_tiles - i) < 30 - green_count)) {
             temp.color = 'G';
             green_count++;
         } else {
             // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
-            int color_choice = rand() % 5;
-            switch (color_choice) {
-                case 0:
-                    temp.color = 'B'; // Blue
-                    break;
-                case 1:
-                    temp.color = 'P'; // Pink
-                    break;
-                case 2:
-                    temp.color = 'N'; // Brown
-                    break;
-                case 3:
-                    temp.color = 'R'; // Red
-                    break;
-                case 4:
-                    temp.color = 'U'; // Purple
-                    break;
+            if (i <= GRAVEYARD_START){
+                int color_choice = rand() % 5;
+                switch (color_choice) {
+                    case 0:
+                        temp.color = 'B'; // Blue
+                        break;
+                    case 1:
+                        temp.color = 'P'; // Pink
+                        break;
+                    case 2:
+                        temp.color = 'N'; // Brown
+                        break;
+                    case 3:
+                        temp.color = 'U'; // Purple
+                        break;
+                    case 4:
+                        temp.color = 'P'; // Pink
+                        break;
+                }
+            } else if (i > GRAVEYARD_START && i <= OASIS_LIMIT) {
+                int color_choice = rand() % 5;
+                switch (color_choice) {
+                    case 0:
+                        temp.color = 'B'; // Blue
+                        break;
+                    case 1:
+                        temp.color = 'P'; // Pink
+                        break;
+                    case 2:
+                        temp.color = 'N'; // Brown
+                        break;
+                    case 3:
+                        temp.color = 'R'; // Red
+                        break;
+                    case 4:
+                        temp.color = 'U'; // Purple
+                        break;
+                }
+            } else {
+                int color_choice = rand() % 4;
+                switch (color_choice) {
+                    case 0:
+                        temp.color = 'P'; // Pink
+                        break;
+                    case 1:
+                        temp.color = 'N'; // Brown
+                        break;
+                    case 2:
+                        temp.color = 'R'; // Red
+                        break;
+                    case 3:
+                        temp.color = 'U'; // Purple
+                        break;
+                    }
+                }
             }
-        }
+    // Assign the tile to the board for the specified lane
+    _tiles[player_index][i] = temp;
+    }
+}
+
+void Board::initializePridePath(int player_index) {
+    Tile temp;
+    int green_count = 0;
+    int total_tiles = _BOARD_SIZE;
+    const int OASIS_LIMIT = 39; //amount of tiles before you no longer can find an oasis
+    const int GRAVEYARD_START = 26; //amount of tiles before you see any graveyards
+
+    // Keep track of green tile positions to ensure we place exactly 30 greens
+    for (int i = 0; i < total_tiles; i++) {
+        if (i == total_tiles - 1) {
+            // Set the last tile as Orange for "Pride Rock"
+            temp.color = 'O';
+        } else if (i == 0) {
+             // Set the starting tile Grey
+            temp.color = 'Y';
+        } else if (green_count < 30 && (rand() % (total_tiles - i) < 30 - green_count)) {
+            temp.color = 'G';
+            green_count++;
+        } else {
+            // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
+            if (i < GRAVEYARD_START){
+                int color_choice = rand() % 4;
+                switch (color_choice) {
+                    case 0:
+                        temp.color = 'B'; // Blue
+                        break;
+                    case 1:
+                        temp.color = 'P'; // Pink
+                        break;
+                    case 2:
+                        temp.color = 'N'; // Brown
+                        break;
+                    case 3:
+                        temp.color = 'U'; // Purple
+                        break;
+                }
+            } else if (i >= GRAVEYARD_START && i <= OASIS_LIMIT) {
+                int color_choice = rand() % 5;
+                switch (color_choice) {
+                    case 0:
+                        temp.color = 'B'; // Blue
+                        break;
+                    case 1:
+                        temp.color = 'P'; // Pink
+                        break;
+                    case 2:
+                        temp.color = 'N'; // Brown
+                        break;
+                    case 3:
+                        temp.color = 'R'; // Red
+                        break;
+                    case 4:
+                        temp.color = 'U'; // Purple
+                        break;
+                }
+            } else {
+                int color_choice = rand() % 4;
+                switch (color_choice) {
+                    case 0:
+                        temp.color = 'P'; // Pink
+                        break;
+                    case 1:
+                        temp.color = 'N'; // Brown
+                        break;
+                    case 2:
+                        temp.color = 'R'; // Red
+                        break;
+                    case 3:
+                        temp.color = 'U'; // Purple
+                        break;
+                    }
+                }
+            }
         // Assign the tile to the board for the specified lane
         _tiles[player_index][i] = temp;
-        }
     }
+}
 
-// Board::Board()
-// {
-// _player_count = 1;
-// // Initialize player position
-// _player_position[0] = 0;
-// // Initialize tiles
-// initializeTiles();
-// }
-//
-Board::Board(int player_count) {
-    if (player_count > _MAX_PLAYERS) {
-        _player_count = _MAX_PLAYERS;
-    } else {
-        _player_count = player_count;
-    }
-
+Board::Board() {
     // Initialize player position
-    for (int i = 0; i < _player_count; i++) {
+    for (int i = 0; i < _MAX_PLAYERS; i++) {
+        _player_position[i] = 0;
+    }
+
+}
+
+Board::Board(int player1, int player2) {
+    // Initialize player position
+    for (int i = 0; i < _MAX_PLAYERS; i++) {
         _player_position[i] = 0;
     }
 
     // Initialize tiles
-    initializeBoard();
+    initializeBoard(player1, player2);
 }
 
 bool Board::isPlayerOnTile(int player_index, int pos) {
@@ -141,22 +260,19 @@ void Board::displayBoard() {
     }
 }
 
-// bool Board::movePlayer(int player_index)
-// {
-// // Increment player position
-// _player_position[player_index]++;
-// if (_player_position[player_index] == _BOARD_SIZE - 1)
-// {
-// // Player reached last tile
-// return true;
-// }
-// return false;
-// }
-// int Board::getPlayerPosition(int player_index) const
-// {
-// if (player_index >= 0 && player_index <= _player_count)
-// {
-// return _player_position[player_index];
-// }
-// return -1;
-// }
+bool Board::movePlayer(int player_index) {
+// Increment player position
+    _player_position[player_index]++;
+    if (_player_position[player_index] == _BOARD_SIZE - 1) {
+        // Player reached last tile
+        return true;
+    }
+    return false;
+}
+
+int Board::getPlayerPosition(int player_index) const {
+    if (player_index >= 0 && player_index <= _player_count) {
+        return _player_position[player_index];
+    }
+    return -1;
+}

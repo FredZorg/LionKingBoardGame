@@ -1,6 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "Tile.h"
+#include "tile.h"
 
 class Board
 {
@@ -11,13 +11,15 @@ private:
     int _player_count;
     int _player_position[_MAX_PLAYERS];
     void displayTile(int player_index, int pos);
-    void initializeTiles(int player_index);
+    void initializePridePath(int player_index);
+    void initializeCubPath(int player_index);
     bool isPlayerOnTile(int player_index, int pos);
 public:
     Board();
+    Board(int player1, int player2);
     Board(int player_count);
     void displayTrack(int player_index);
-    void initializeBoard();
+    void initializeBoard(int player1, int player2);
     void displayBoard();
     bool movePlayer(int player_index);
     int getPlayerPosition(int player_index) const;
