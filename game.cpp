@@ -17,7 +17,7 @@ class Game {
             lions.erase(lions.begin() + index);
         }
         //display each character their stats and their ascii image and then prompt the user
-        void lionSelectionMenu(Player player) {
+        void lionSelectionMenu(Player& player) {
             int input;
             fstream file_asc;
             file_asc.open("asciiLion.txt");
@@ -65,6 +65,7 @@ class Game {
             getline(file_asc, line2);
             cout << line2;
             file_asc.close();
+
             cin >> input;
             player.setLionName(lions[input-1].getLionName());
             player.setStamina(lions[input-1].getStamina());
@@ -72,7 +73,7 @@ class Game {
             player.setWisdom(lions[input-1].getWisdom());
             player.setStrength(lions[input-1].getStrength());
 
-            removeSelectedCharacter(input-1);
+            // removeSelectedCharacter(input-1);
         }
 
 
@@ -152,8 +153,6 @@ class Game {
         vector<Player> lions;
 
     private:
-
-
         //vector holds the different ascii images for the lions
         vector<string> asciiLion;
         //vector holds the different ascii images for the mentors

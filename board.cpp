@@ -260,9 +260,17 @@ void Board::displayBoard() {
     }
 }
 
-bool Board::movePlayer(int player_index) {
+bool Board::movePlayer(int player_index, int dist) {
 // Increment player position
-    _player_position[player_index]++;
+    if (dist + _player_position[player_index] >= 51){
+        _player_position[player_index] = 51;
+    } else if (dist + _player_position[player_index] <= 1){
+        _player_position[player_index] = 1;
+    } else {
+        _player_position[player_index] += dist;
+    }
+
+    _player_position[player_index] += dist;
     if (_player_position[player_index] == _BOARD_SIZE - 1) {
         // Player reached last tile
         return true;

@@ -44,56 +44,56 @@ public:
         }
     }
 
-// getters
-string getPlayerName() {
-    return _playerName;
-}
-string getLionName() {
-    return _lionName;
-}
-int getStrength() {
-    return _strength;
-}
-int getStamina() {
-    return _stamina;
-}
-int getWisdom() {
-    return _wisdom;
-}
-int getPridePoints() {
-    return _pride_points;
-}
-int getAge() {
-    return _age;
-}
-string getAdviosrName() {
-    return _advisorName;
-}
+    // getters
+    string getPlayerName() {
+        return _playerName;
+    }
+    string getLionName() {
+        return _lionName;
+    }
+    int getStrength() {
+        return _strength;
+    }
+    int getStamina() {
+        return _stamina;
+    }
+    int getWisdom() {
+        return _wisdom;
+    }
+    int getPridePoints() {
+        return _pride_points;
+    }
+    int getAge() {
+        return _age;
+    }
+    string getAdviosrName() {
+        return _advisorName;
+    }
 
-// setters (should i error check?)
-void setAge(int age) {
-    _age = age;
-}
-void setPlayerName(string playerName) {
-    _playerName = playerName;
-}
-void setLionName(string name) {
-    _lionName = name;
-}
-void setStrength(int strength) {
-    _strength = strength;
-}
-void setStamina(int stamina) {
-    _stamina = stamina;
-}
-void setWisdom(int wisdom) {
-    _wisdom = wisdom;
-}
-void setPridePoints (int pride_points) {
-    _pride_points = pride_points;
-}
-void setAdvisorName (string name) {
-    _advisorName = name;
-}
+    // setters (should i error check?)
+    void setAge(int age) {
+        _age = age;
+    }
+    void setPlayerName(string playerName) {
+        _playerName = playerName;
+    }
+    void setLionName(string name) {
+        _lionName = name;
+    }
+    void setStrength(int strength) {
+        _strength = strength;
+    }
+    void setStamina(int stamina) {
+        _stamina = stamina;
+    }
+    void setWisdom(int wisdom) {
+        _wisdom = wisdom;
+    }
+    void setPridePoints (int pride_points) {
+        _pride_points = pride_points;
+    }
+    void setAdvisorName (string name) {
+        _advisorName = name;
+    }
 
 };
