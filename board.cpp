@@ -1,3 +1,4 @@
+//Abey Saleh and Fred Zordgrager Group Project
 #include "board.h"
 #include <iostream>
 #define RED "\033[48;2;230;10;10m"
