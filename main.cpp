@@ -10,6 +10,7 @@ using namespace std;
 void startGame();
 
 int main(){
+    srand(time(0));
     cout << "Testing Cub Path vs Pride Path:\n";
         Board board(0, 1);  // Player 1 on Cub Path, Player 2 on Pride Path
 

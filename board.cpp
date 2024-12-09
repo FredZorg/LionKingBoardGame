@@ -10,7 +10,8 @@
 #define ORANGE "\033[48;2;230;115;0m" /* Orange (230,115,0) */
 #define GREY "\033[48;2;128;128;128m" /* Grey (128,128,128) */
 #define RESET "\033[0m"
-//tomotaoes
+#define BLACK_BG "\033[48;2;0;0;0m"
+
 using namespace std;
 
 //0 for cub path 1 for pride path
@@ -249,7 +250,7 @@ void Board::displayTrack(int player_index) {
     for (int i = 0; i < _BOARD_SIZE; i++) {
         displayTile(player_index, i);
     }
-    cout << endl;
+    cout << "\033[49m\033[K" << RESET << endl;
 }
 
 void Board::displayBoard() {
