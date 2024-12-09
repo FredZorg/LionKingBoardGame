@@ -6,7 +6,7 @@ using namespace std;
 
 class Player {
 private:
-    string _playerName, _lionName, _advisorName;
+    string _playerName, _lionName, _advisorName, _advisorAbility;
     int _strength, _stamina, _wisdom, _pride_points, _age;
 
 public:
@@ -18,6 +18,7 @@ public:
         _strength = 100;
         _wisdom = 100;
         _advisorName = "";
+        _advisorAbility = "";
         _age = 0;
     }
     Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom) {
@@ -70,7 +71,14 @@ public:
         return _advisorName;
     }
 
+    string getAdvisorAbility() {
+        return _advisorAbility;
+    }
+
     // setters (should i error check?)
+    void setAdvisorAbility(string advisorAbility) {
+        _advisorAbility = advisorAbility;
+    }
     void setAge(int age) {
         _age = age;
     }
