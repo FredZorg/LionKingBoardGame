@@ -3,7 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cctype>
-#include "Player.cpp"
+#include "player.cpp"
 
 using namespace std;
 
@@ -17,13 +17,16 @@ class Game {
             lions.erase(lions.begin() + index);
         }
         //display each character their stats and their ascii image and then prompt the user
-        void lionSelectionMenu(Player& player) {
+        Player lionSelectionMenu(Player player) {
+            string name;
+            cout << "Enter your name";
+            cin >> name;
             int input;
             fstream file_asc;
             file_asc.open("asciiLion.txt");
             if (file_asc.fail()) {
                 cout << "File did not open.";
-                return;
+                return player;
             }
             string line;
             for (int i = 0; i < lions.size(); i++) {
@@ -67,20 +70,31 @@ class Game {
             file_asc.close();
 
             cin >> input;
+            player.setPlayerName(name);
             player.setLionName(lions[input-1].getLionName());
             player.setStamina(lions[input-1].getStamina());
             player.setAge(lions[input-1].getAge());
             player.setWisdom(lions[input-1].getWisdom());
             player.setStrength(lions[input-1].getStrength());
 
+            return player;
+
             // removeSelectedCharacter(input-1);
         }
-
-
         //displays the specific characters character and its stats
-        void displayStats(Player player);
+        void displayStats(Player player) {
+            cout << "\nHere are your players' stats:\n" << endl;
+            cout << "Selected Lion Name: " << player.getLionName() << endl;
+            cout << "Age: " << player.getAge() << endl;
+            cout << "Strength: " << player.getStrength() << endl;
+            cout << "Stamina: " << player.getStamina() << endl;
+            cout << "Wisdom: " << player.getWisdom() << endl;
+        }
         //have them pick to the pride lands or to cub training, ture if pride lands false if cub training
-        bool prideOrTrain();
+        int prideOrTrain() {
+            cout << "You have picked your character. Now, the game begins.\nDo you want to go to Cub Training to hone in on your skills, or are you confident enough to go staight to the Pride Lands?\n Pick Wisely!!";
+            cout << "Enter 0 if you would like to go to Cub Training first!"
+        }
         //choose whether to roll or go to the menu
         void rollOrMenuInput() {
             string input;
@@ -105,11 +119,16 @@ class Game {
             }
         }
         //rolls a number between one and six
+        // should call func that actualy moves pieces and change this to void
         int roll() {
-            return rand() % (6) + 1; // should call func that actualy moves pieces and change this to void
+            int rollValue = rand() % (6) + 1;
+            return rollValue;
         }
         //prompt the user for their name and then assign it to the player
-        void playerNameInput(Player player);
+        // cout << "What is your name?";
+        void playerNameInput(Player player) {
+
+        }
         void createLionsVector() {
             int count = 0;
             fstream file_input;
@@ -158,9 +177,8 @@ class Game {
         //vector holds the different ascii images for the mentors
         vector<string> asciiAdvisor;
         //vector hold the different lions and their stats
-
-
         void displayMenu() {
+
         }
 
 };
