@@ -1,10 +1,17 @@
 #ifndef TILE_H
 #define TILE_H
+#include <iostream>
+#include "Player.cpp"
+
+using namespace std;
 
 class Tile {
-public:
-    Tile() : color(' ') {}  // Default constructor initializing color to space
-    char color;
+    private:
+
+    public:
+        Tile();
+        char color;
+        Player getMessage(Player player);
 };
 
 #endif

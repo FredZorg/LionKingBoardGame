@@ -27,6 +27,8 @@ void Board::initializeBoard(int player1, int player2) {
     } else {
         initializePridePath(1);
     }
+
+
 }
 
 #include <cstdlib> // For rand() and srand()
@@ -262,7 +264,7 @@ void Board::displayBoard() {
     }
 }
 
-bool Board::movePlayer(int player_index, int dist) {
+void Board::movePlayer(int player_index, int dist) {
 // Increment player position
     if (dist + _player_position[player_index] >= 52){
         _player_position[player_index] = 52;
@@ -272,11 +274,10 @@ bool Board::movePlayer(int player_index, int dist) {
         _player_position[player_index] += dist;
     }
 
-    if (_player_position[player_index] == _BOARD_SIZE) {
-        // Player reached last tile
-        return true;
-    }
-    return false;
+    _tiles[player_index][_player_position[player_index]].getMessage();
+
+
+
 }
 
 int Board::getPlayerPosition(int player_index) const {
