@@ -76,24 +76,36 @@ class Game {
             player.setAge(lions[input-1].getAge());
             player.setWisdom(lions[input-1].getWisdom());
             player.setStrength(lions[input-1].getStrength());
+            player.setPridePoints(lions[input-1].getPridePoints());
 
             return player;
 
             // removeSelectedCharacter(input-1);
         }
         //displays the specific characters character and its stats
-        void displayStats(Player player) {
-            cout << "\nHere are your players' stats:\n" << endl;
+        void displayAgeAndInfo(Player player) {
+            cout << "\nHere are your players' name and age:\n" << endl;
             cout << "Selected Lion Name: " << player.getLionName() << endl;
             cout << "Age: " << player.getAge() << endl;
+        }
+        void displayGameStats(Player player) {
+            cout << "\nHere are your players' game stats:\n" << endl;
+            cout << "Selected Lion Name: " << player.getLionName() << endl;
             cout << "Strength: " << player.getStrength() << endl;
             cout << "Stamina: " << player.getStamina() << endl;
             cout << "Wisdom: " << player.getWisdom() << endl;
         }
         //have them pick to the pride lands or to cub training, ture if pride lands false if cub training
         int prideOrTrain() {
+            int answer;
             cout << "You have picked your character. Now, the game begins.\nDo you want to go to Cub Training to hone in on your skills, or are you confident enough to go staight to the Pride Lands?\n Pick Wisely!!";
-            cout << "Enter 0 if you would like to go to Cub Training first!"
+            cout << "Enter 0 if you would like to go to Cub Training first!\n";
+            cout << "Enter 1 if you would like to go to the Pride Lands first!";
+            cin >> answer;
+            if (answer == 0) return answer;
+            if (answer == 1) return answer;
+            else cout << "You must enter a valid input";
+            prideOrTrain();
         }
         //choose whether to roll or go to the menu
         void rollOrMenuInput() {
@@ -120,14 +132,8 @@ class Game {
         }
         //rolls a number between one and six
         // should call func that actualy moves pieces and change this to void
-        int roll() {
+        void roll() {
             int rollValue = rand() % (6) + 1;
-            return rollValue;
-        }
-        //prompt the user for their name and then assign it to the player
-        // cout << "What is your name?";
-        void playerNameInput(Player player) {
-
         }
         void createLionsVector() {
             int count = 0;
@@ -177,8 +183,22 @@ class Game {
         //vector holds the different ascii images for the mentors
         vector<string> asciiAdvisor;
         //vector hold the different lions and their stats
-        void displayMenu() {
+        void displayMenu(Player player) {
+            int menu;
+            cout << "This is your menu. Enter the number corresponding to what you would like to do!\n";
+            cout << "1. Review your player: Check on your health and age!\n";
+            cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
+            cout << "3. Review your Advisor: Check where you are on the board!\n";
+            cout << "4. Review your Position: Check where you are on the board!\n";
+            cout << "5. Review your progress: Restart if you are not happy with decisons that YOU have made.\n";
+            cin >> menu;
+            if (answer == 0) return answer;
 
+            if (menu == 1)
+
+
+            cout << "2. Review your Advisor: Check who your current advisor is on the game.\n";
+            cout << "3. "
         }
 
 };

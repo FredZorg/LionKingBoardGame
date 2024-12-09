@@ -20,7 +20,7 @@ public:
         _advisorName = "";
         _age = 0;
     }
-    Player(string playerName, string name, int strength, int stamina, int wisdom) {
+    Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom) {
         _playerName = playerName;
         _lionName = name;
         _pride_points = 0;
