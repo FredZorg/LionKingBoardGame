@@ -31,6 +31,11 @@ class Player {
         void setWisdom(int wisdom);
         void setPridePoints(int pride_points);
         void setAdvisorName(std::string name);
+
+        //adding
+        void addStrength(int strength);
+        void addStamina(int stamina);
+        void addWisdom(int wisdom);
 };
 
 #endif

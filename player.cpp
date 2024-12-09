@@ -103,5 +103,29 @@ public:
     void setAdvisorName (string name) {
         _advisorName = name;
     }
+    void addStrength(int strength) {
+        if ((_strength + strength) < 100){
+            _strength = 100;
+            return;
+        } else {
+            _strength += strength;
+        }
+    }
+    void addStamina(int stamina) {
+        if ((_stamina + stamina) < 100){
+            _stamina = 100;
+            return;
+        } else {
+            _stamina += stamina;
+        }
+    }
+    void addWisdom(int wisdom) {
+        if ((_wisdom + wisdom) < 100){
+            _wisdom = 100;
+            return;
+        } else {
+            _wisdom += wisdom;
+        }
+    }
 
 };
