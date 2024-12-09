@@ -52,7 +52,7 @@ void Board::initializeCubPath(int player_index) {
         } else {
             // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
             if (i <= GRAVEYARD_START){
-                int color_choice = rand() % 5;
+                int color_choice = rand() % 4;
                 switch (color_choice) {
                     case 0:
                         temp.color = 'B'; // Blue
@@ -65,9 +65,6 @@ void Board::initializeCubPath(int player_index) {
                         break;
                     case 3:
                         temp.color = 'U'; // Purple
-                        break;
-                    case 4:
-                        temp.color = 'P'; // Pink
                         break;
                 }
             } else if (i > GRAVEYARD_START && i <= OASIS_LIMIT) {
@@ -133,7 +130,7 @@ void Board::initializePridePath(int player_index) {
         } else {
             // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
             if (i < GRAVEYARD_START){
-                int color_choice = rand() % 4;
+                int color_choice = rand() % 5;
                 switch (color_choice) {
                     case 0:
                         temp.color = 'B'; // Blue
@@ -146,6 +143,9 @@ void Board::initializePridePath(int player_index) {
                         break;
                     case 3:
                         temp.color = 'U'; // Purple
+                        break;
+                    case 4:
+                        temp.color = 'P'; // Pink
                         break;
                 }
             } else if (i >= GRAVEYARD_START && i <= OASIS_LIMIT) {
@@ -263,16 +263,15 @@ void Board::displayBoard() {
 
 bool Board::movePlayer(int player_index, int dist) {
 // Increment player position
-    if (dist + _player_position[player_index] >= 51){
-        _player_position[player_index] = 51;
+    if (dist + _player_position[player_index] >= 52){
+        _player_position[player_index] = 52;
     } else if (dist + _player_position[player_index] <= 1){
         _player_position[player_index] = 1;
     } else {
         _player_position[player_index] += dist;
     }
 
-    _player_position[player_index] += dist;
-    if (_player_position[player_index] == _BOARD_SIZE - 1) {
+    if (_player_position[player_index] == _BOARD_SIZE) {
         // Player reached last tile
         return true;
     }

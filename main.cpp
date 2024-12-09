@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "game.cpp"
+#include "board.h"
 
 
 using namespace std;
@@ -9,25 +10,26 @@ using namespace std;
 void startGame();
 
 int main(){
-    Game game;
+    cout << "Testing Cub Path vs Pride Path:\n";
+        Board board(0, 1);  // Player 1 on Cub Path, Player 2 on Pride Path
 
-    // Create player object
-    Player testPlayer;
+        // Display initial board
+        cout << "\nInitial board state:\n";
+        board.displayBoard();
 
-    // Initialize the lions vector
-    game.createLionsVector();
+        // Test some movements
+        cout << "\nMoving Player 1 forward 3 spaces:\n";
+        board.movePlayer(0, 3);
+        board.displayBoard();
 
-    // Test the lion selection menu
-    cout << "Testing Lion Selection Menu:" << endl;
-    game.lionSelectionMenu(testPlayer);
+        cout << "\nMoving Player 2 forward 5 spaces:\n";
+        board.movePlayer(1, 5);
+        board.displayBoard();
 
-    // Optionally print the selected lion's stats to verify
-    cout << "\nSelected Lion Stats:" << endl;
-    cout << "Name: " << testPlayer.getLionName() << endl;
-    cout << "Age: " << testPlayer.getAge() << endl;
-    cout << "Strength: " << testPlayer.getStrength() << endl;
-    cout << "Stamina: " << testPlayer.getStamina() << endl;
-    cout << "Wisdom: " << testPlayer.getWisdom() << endl;
+        // Test boundary movement
+        cout << "\nTesting boundary movement (moving Player 1 back 2 spaces):\n";
+        board.movePlayer(0, -2);
+        board.displayBoard();
 }
 
 void startGame() {

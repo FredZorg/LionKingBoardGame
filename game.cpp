@@ -3,7 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cctype>
-#include "player.cpp"
+#include "Player.cpp"
 
 using namespace std;
 

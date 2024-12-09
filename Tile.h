@@ -2,16 +2,9 @@
 #define TILE_H
 
 class Tile {
-    private:
-        char color;
-
-    public:
-        Tile();
-        char getColor() const;
-        void setColor(char c);
-
-        friend class Board;
-
+public:
+    Tile() : color(' ') {}  // Default constructor initializing color to space
+    char color;
 };
 
 #endif
