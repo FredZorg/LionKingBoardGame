@@ -78,10 +78,87 @@ Player Tile::isPurple(Player player){
     return player;
 }
 
-//Normal tile, need to use random_events.txt for events, for some events an advisor will negate a negative task
+//Normal tile, need to use random.txt for events, for some events an advisor will negate a negative task
 //cout each event and update each player thing 
-Player Tile::isGreen(Player player){
+Player Tile::isGreen(Player player) {
+    fstream file_rand;
+    file_rand.open("random_events.txt");
+    if (file_rand.fail()) {
+        cout << "File did not open.";
+        return player;
+    }
 
+    string line;
+    int lines = 0;
+
+    // Count the number of lines
+    while (getline(file_rand, line)) {
+        lines++;
+    }
+    file_rand.clear();      // Clear EOF and error flags
+    file_rand.seekg(0);     // Reset file pointer to beginning
+
+    // Loop to handle "restart" behavior
+    while (true) {
+        int randy = rand() % 2 + 1;
+        if (randy == 1) {
+            return player;
+        }
+
+        string desc, trainOrPride, advisor, pridePoints;
+        int ranVent = rand() % lines + 1;
+
+        // Read the random event
+        for (int i = 0; i < ranVent; i++) {
+            getline(file_rand, desc, '|');
+            getline(file_rand, trainOrPride, '|');
+            getline(file_rand, advisor, '|');
+            getline(file_rand, pridePoints);
+        }
+
+        int newTrainOrPride = stoi(trainOrPride);
+        int newAdvisor = stoi(advisor);
+        int newPridePoints = stoi(pridePoints);
+        string advisorName;
+
+        // Map newAdvisor values to advisor names
+        if (newAdvisor == 0) advisorName = "none";
+        else if (newAdvisor == 1) advisorName = "Rafiki";
+        else if (newAdvisor == 2) advisorName = "Nala";
+        else if (newAdvisor == 3) advisorName = "Surabi";
+        else if (newAdvisor == 4) advisorName = "Zazu";
+        else if (newAdvisor == 5) advisorName = "Sarafina";
+
+        // If the player's choice doesn't match, restart the loop
+        if (newTrainOrPride != player.getChoice()) {   
+            continue;
+        }
+
+        // Otherwise, process the result and exit the loop
+        if (newPridePoints > 0) {
+            int morePride = player.getPridePoints() + newPridePoints;
+            player.setPridePoints(morePride);
+            cout << desc << endl;
+            cout << "Congrats! You spun well. Enjoy " << newPridePoints << " more Pride Points\n";
+            cout << "Current Pride Points: " << player.getPridePoints();
+        } else {
+            if (advisorName == player.getAdvisorName()) {
+                cout << "Congrats! You did not spin well, but your Advisor saved you.\n";
+                cout << "You did not lose any Pride Points!\n";
+                cout << "Current Pride Points: " << player.getPridePoints();
+            } else {
+                int lossPride = player.getPridePoints() + newPridePoints;
+                player.setPridePoints(lossPride);
+                cout << "Unfortunately, you did not spin well.\n";
+                cout << "You lost " << newPridePoints << " Pride Points\n";
+                cout << "Current Pride Points: " << player.getPridePoints();
+            }
+        }
+
+        break; // Exit the loop after processing the result
+    }
+
+    file_rand.close();
     return player;
 }
 

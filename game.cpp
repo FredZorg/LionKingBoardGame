@@ -22,12 +22,6 @@ Player Game::lionSelectionMenu(Player player) {
     cout << "Enter your name" << endl;
     cin >> name;
     int input;
-    fstream file_asc;
-    file_asc.open("asciiLion.txt");
-    if (file_asc.fail()) {
-        cout << "File did not open." << endl;
-        return player;
-    }
     string line;
     for (int i = 0; i < lions.size(); i++) {
         cout << "Option # " << i+1 << endl;
@@ -45,7 +39,6 @@ Player Game::lionSelectionMenu(Player player) {
             cout << "and their wisdom is at level " << lions[i].getWisdom() << ".\n";
             getline(file_asc, line, 'Z');
             cout << line;
-
         }
         else if (lions[i].getWisdom() > lions[i].getStrength() && lions[i].getWisdom() > lions[i].getStamina()) {
             cout << lions[i].getLionName() << "'s best attribute is " << "their wisdom @ level: " << lions[i].getWisdom() << endl;
@@ -67,7 +60,6 @@ Player Game::lionSelectionMenu(Player player) {
     string line2;
     getline(file_asc, line2);
     cout << line2;
-    file_asc.close();
 
     cin >> input;
     player.setPlayerName(name);
