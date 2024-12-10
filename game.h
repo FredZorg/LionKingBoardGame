@@ -37,7 +37,8 @@ class Game {
     private:
         std::vector<std::string> asciiLion;
         std::vector<std::string> asciiAdvisor;
-        std::vector<std::string> allAdvisors;
+        std::vector<std::string> advisorNames;
+        std::vector<std::string> advisorAbilities;
         int currentTurn; //0 for player 1, 1 for player 2
 };
 

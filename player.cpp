@@ -1,19 +1,22 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-using namespace std;
 #include "player.h"
 
+using namespace std;
+
+//0 is cubTraining 1 is to the pride
 Player::Player() {
     _playerName = "";
     _lionName = "";
     _stamina = 100;
     _strength = 100;
     _wisdom = 100;
-    _advisorName = "";
-    _advisorAbility = "";
+    _advisorName = "E";
+    _advisorAbility = "E";
     _age = 0;
 }
+
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom) {
     _playerName = playerName;
     _lionName = name;
@@ -120,4 +123,4 @@ void Player :: addWisdom(int wisdom) {
     } else {
         _wisdom += wisdom;
     }
-
+}

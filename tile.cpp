@@ -78,7 +78,7 @@ Player Tile::isPurple(Player player){
     return player;
 }
 
-//Normal tile, need to use random.txt for events, for some events an advisor will negate a negative task
+//Normal tile, need to use random_events.txt for events, for some events an advisor will negate a negative task
 //cout each event and update each player thing 
 Player Tile::isGreen(Player player){
 
