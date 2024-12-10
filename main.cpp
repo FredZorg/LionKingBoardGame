@@ -70,8 +70,8 @@ void startGame(){
     }
 
     //select lions
-    game.lionSelectionMenu(player1);
-    game.lionSelectionMenu(player2);
+    player1 = game.lionSelectionMenu(player1);
+    player2 = game.lionSelectionMenu(player2);
     
     
     

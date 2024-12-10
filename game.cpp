@@ -30,21 +30,21 @@ Player Game::lionSelectionMenu(Player player) {
             cout << lions[i].getLionName() << "'s best attribute is " << "their strength @ level: " << lions[i].getStrength() << endl;
             cout << "Their stamina is at level " << lions[i].getStamina() << ", ";
             cout << "and their wisdom is at level " << lions[i].getWisdom() << ".\n";
-            getline(file_asc, line, 'Z');
+            cout << asciiLion[i] << endl;
             cout << line;
         }
         else if (lions[i].getStamina() > lions[i].getStrength() && lions[i].getStamina() > lions[i].getWisdom()) {
             cout << lions[i].getLionName() << "'s best attribute is " << "their stamina @ level: " << lions[i].getStamina() << endl;
             cout << "Their strength is at level "<< lions[i].getStrength() << ", ";
             cout << "and their wisdom is at level " << lions[i].getWisdom() << ".\n";
-            getline(file_asc, line, 'Z');
+            cout << asciiLion[i] << endl;
             cout << line;
         }
         else if (lions[i].getWisdom() > lions[i].getStrength() && lions[i].getWisdom() > lions[i].getStamina()) {
             cout << lions[i].getLionName() << "'s best attribute is " << "their wisdom @ level: " << lions[i].getWisdom() << endl;
             cout << "Their strength is at level "<< lions[i].getStrength() << ", ";
             cout << "and their stamina is at level " << lions[i].getStamina() << ".\n";
-            getline(file_asc, line, 'Z');
+            cout << asciiLion[i] << endl;
             cout << line;
         }
         else {
@@ -53,14 +53,12 @@ Player Game::lionSelectionMenu(Player player) {
             cout << "their strength is at level "<< lions[i].getStrength() << ", ";
             cout << "their stamina is at level " << lions[i].getStamina() << ", ";
             cout << "and their wisdom is at level " << lions[i].getWisdom() << ".\n";
-            getline(file_asc, line, 'Z');
+            cout << asciiLion[i] << endl;
             cout << line;
         }
     }
-    string line2;
-    getline(file_asc, line2);
-    cout << line2;
 
+    cout << "Enter the number you want as your lion." << endl;
     cin >> input;
     player.setPlayerName(name);
     player.setLionName(lions[input-1].getLionName());
@@ -69,9 +67,10 @@ Player Game::lionSelectionMenu(Player player) {
     player.setWisdom(lions[input-1].getWisdom());
     player.setStrength(lions[input-1].getStrength());
     player.setPridePoints(lions[input-1].getPridePoints());
+    lions.erase(lions.begin() + (input - 1));
+    asciiLion.erase(asciiLion.begin() + (input - 1));
 
     return player;
-
     // removeSelectedCharacter(input-1);
 }
 
@@ -275,6 +274,7 @@ void Game::displayMenu(Player player) {
     //creat the asciiLion vector using the asciiLions.cpp
 void Game::creatAsciiLion(){
     fstream file;
+    string junk;
     file.open("asciiLion.txt");
     
     string ascii;
@@ -286,6 +286,7 @@ void Game::creatAsciiLion(){
     
     for (int i = 0; i < lions.size(); i ++){
         getline(file, ascii, 'Z');
+        getline(file, junk);
         asciiLion.push_back(ascii);
     }
     
