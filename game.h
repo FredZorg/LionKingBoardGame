@@ -29,7 +29,7 @@ class Game {
         void displayGameStats(Player player);
         int prideOrTrain(Player player);
         void rollOrMenuInput(Player player);
-        void displayMenu();
+        void displayMenu(Player player);
         void createAdvisorVector();
         Player advisorSelectionMenu (Player player);
 

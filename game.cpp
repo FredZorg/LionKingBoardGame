@@ -238,38 +238,38 @@ void Game::createLionsVector() {
     file_input.close(); // Close the file
 }
 
-// void Game::displayMenu(Player player) {
-//     int menu;
-//     cout << "This is your menu. Enter the number corresponding to what you would like to do!\n";
-//     cout << "1. Review your player: Check on your health and age!\n";
-//     cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
-//     cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
-//     cout << "4. Review your Position: Check where you are on the board!\n";
-//     cout << "5. Review your progress: Restart if you are not happy with decisons that YOU have made.\n";
-//     cin >> menu;
-//      //if (answer == 0) return answer;
+void Game::displayMenu(Player player) {
+    int menu;
+    cout << "This is your menu. Enter the number corresponding to select what you would like to do!\n";
+    cout << "1. Review your player: Check on your health and age!\n";
+    cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
+    cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
+    cout << "4. Review your Position: Check where you are on the board!\n";
+    cout << "5. Review your progress: Restart if you are not happy with decisons that YOU have made.\n";
+    cin >> menu;
+     //if (answer == 0) return answer;
 
-//      if (menu == 1) {
-//          displayAgeAndInfo(player);
-//      }
-//      else if (menu == 2) {
-//          displayGameStats(player);
-//      }
-//      else if (menu == 3) {
-//          player.getAdvisorName();
-//          player.getAdvisorAbility();
-//      }
-//     else if (menu == 4) {
-//     // ?    displayBoard();
-//     }
-//     else if (menu == 5) {
-//         // restart
-//     }
-//      else {
-//          cout << "Invalid menu option.\n";
-//          displayMenu(player);
-//      }
-// }
+     if (menu == 1) {
+         displayAgeAndInfo(player);
+     }
+     else if (menu == 2) {
+         displayGameStats(player);
+     }
+     else if (menu == 3) {
+         player.getAdvisorName();
+         player.getAdvisorAbility();
+     }
+    else if (menu == 4) {
+    // ?    displayBoard();
+    }
+    else if (menu == 5) {
+        // restart
+    }
+     else {
+         cout << "Invalid menu option.\n";
+         displayMenu(player);
+     }
+}
 
     //creat the asciiLion vector using the asciiLions.cpp
     void creatAsciiLion();
