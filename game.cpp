@@ -12,26 +12,26 @@ Game::Game(int start){
     currentTurn = start;
 };
 
-    //when a character is selected remove it from the lions vector
+//when a character is selected remove it from the lions vector
 void Game::removeSelectedCharacter(int index) {
     lions.erase(lions.begin() + index);
 }
 //display each character their stats and their ascii image and then prompt the user
 Player Game::lionSelectionMenu(Player player) {
     string name;
-    cout << "Enter your name";
+    cout << "Enter your name" << endl;
     cin >> name;
     int input;
     fstream file_asc;
     file_asc.open("asciiLion.txt");
     if (file_asc.fail()) {
-        cout << "File did not open.";
+        cout << "File did not open." << endl;
         return player;
     }
     string line;
     for (int i = 0; i < lions.size(); i++) {
         cout << "Option # " << i+1 << endl;
-        cout << "ENTER OPTION NUMBER CORRESPONDING TO THE CHARACTER YOU WANT TO CHOOSE";
+        cout << "ENTER OPTION NUMBER CORRESPONDING TO THE CHARACTER YOU WANT TO CHOOSE" << endl;
         if (lions[i].getStrength() > lions[i].getStamina() && lions[i].getStrength() > lions[i].getWisdom()) {
             cout << lions[i].getLionName() << "'s best attribute is " << "their strength @ level: " << lions[i].getStrength() << endl;
             cout << "Their stamina is at level " << lions[i].getStamina() << ", ";
@@ -81,6 +81,14 @@ Player Game::lionSelectionMenu(Player player) {
     return player;
 
     // removeSelectedCharacter(input-1);
+}
+
+int Game::getCurrentTurn(){
+    return currentTurn;
+}
+
+void Game::setCurrentTurn(int turn){
+    currentTurn = turn;
 }
 
 //could make this not hard coded
@@ -273,6 +281,23 @@ void Game::displayMenu(Player player) {
 }
 
     //creat the asciiLion vector using the asciiLions.cpp
-    void creatAsciiLion();
-    //creat the asciiLion vector using the asciiAdvisor.cpp
-    void creatAsciiAdvisor();
+void Game::creatAsciiLion(){
+    fstream file;
+    file.open("asciiLion.txt");
+    
+    string ascii;
+    
+    if (file.fail()) {
+        cout << "Error opening ascii file" << endl;
+        return;
+    }
+    
+    for (int i = 0; i < lions.size(); i ++){
+        getline(file, ascii, 'Z');
+        asciiLion.push_back(ascii);
+    }
+    
+    file.close();
+}
+    
+    

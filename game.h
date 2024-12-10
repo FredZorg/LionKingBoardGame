@@ -21,10 +21,8 @@ class Game {
         void playerNameInput(Player player);
         void createLionsVector();
         void creatAsciiLion();
-        void creatAsciiAdvisor();
-        std::vector<Player> lions;
         int getCurrentTurn();
-        void setCurrentTurn();
+        void setCurrentTurn(int turn);
         void displayAgeAndInfo(Player player);
         void displayGameStats(Player player);
         int prideOrTrain(Player player);
@@ -35,8 +33,8 @@ class Game {
 
 
     private:
+        std::vector<Player> lions;
         std::vector<std::string> asciiLion;
-        std::vector<std::string> asciiAdvisor;
         std::vector<std::string> advisorNames;
         std::vector<std::string> advisorAbilities;
         int currentTurn; //0 for player 1, 1 for player 2

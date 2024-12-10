@@ -14,12 +14,16 @@ Player::Player() {
     _wisdom = 100;
     _advisorName = "E";
     _advisorAbility = "E";
+    _advisorAscii = "E";
+    _lionAscii = "E";
     _age = 0;
 }
 
-Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom) {
+Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
     _playerName = playerName;
     _lionName = name;
+    _advisorAscii = advisorAscii;
+    _lionAscii = lionAscii;
     _pride_points = 0;
     if (stamina >= 100 && stamina <= 1000) {
         _stamina = stamina;

@@ -41,6 +41,7 @@ int main(){
 }
 
 void startGame(){
+    Game game(0);
     Player player1;
     Player player2;
     string inputS;
@@ -63,11 +64,17 @@ void startGame(){
 
     cout << "To pick the starting order "<< player1.getPlayerName() << " must pick either 1 or 2." << endl;
     if (playerOneStarts(player1,player2)){
-
+        game.setCurrentTurn(0);
     } else {
-        
+        game.setCurrentTurn(1);
     }
 
+    //select lions
+    game.lionSelectionMenu(player1);
+    game.lionSelectionMenu(player2);
+    
+    
+    
 }
 
 bool playerOneStarts(Player playerOne, Player playerTwo){
