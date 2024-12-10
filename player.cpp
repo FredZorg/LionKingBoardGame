@@ -67,6 +67,7 @@ public:
     int getAge() {
         return _age;
     }
+
     string getAdviosrName() {
         return _advisorName;
     }
@@ -126,6 +127,4 @@ public:
         } else {
             _wisdom += wisdom;
         }
-    }
-
-};
+    };

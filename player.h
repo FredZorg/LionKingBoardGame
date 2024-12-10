@@ -21,6 +21,7 @@ class Player {
         int getPridePoints();
         int getAge();
         std::string getAdviosrName();
+        std::string getAdvisorAbility();
 
         // setters
         void setAge(int age);
@@ -31,6 +32,7 @@ class Player {
         void setWisdom(int wisdom);
         void setPridePoints(int pride_points);
         void setAdvisorName(std::string name);
+        void setAdvisorAbility(std::string advisorAbility);
 
         //adding
         void addStrength(int strength);

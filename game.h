@@ -30,11 +30,14 @@ class Game {
         int prideOrTrain(Player player);
         void rollOrMenuInput(Player player);
         void displayMenu();
+        void createAdvisorVector();
+        Player advisorSelectionMenu (Player player);
 
 
     private:
         std::vector<std::string> asciiLion;
         std::vector<std::string> asciiAdvisor;
+        std::vector<std::string> allAdvisors;
         int currentTurn; //0 for player 1, 1 for player 2
 };
 

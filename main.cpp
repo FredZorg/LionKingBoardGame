@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "game.cpp"
+#include "game.h"
 #include "board.h"
 
 

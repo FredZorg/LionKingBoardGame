@@ -81,6 +81,65 @@ Player Game::lionSelectionMenu(Player player) {
 
     // removeSelectedCharacter(input-1);
 }
+
+void Game::createAdvisorVector() {
+    allAdvisors.push_back("Rafiki - Invisibility (the ability to become un-seen)");
+    allAdvisors.push_back("Nala - Night Vision (the ability to see clearly in darkness)");
+    allAdvisors.push_back("Sarabi - Energy Manipulation (the ability to shape and control the properties of energy)");
+    allAdvisors.push_back("Zazu - Weather Control (the ability to influence and manipulate weather patterns)");
+    allAdvisors.push_back("Sarafina - Super Speed (the ability to run 4x faster than the maximum speed of lions)");
+}
+
+Player Game::advisorSelectionMenu (Player player) {
+    fstream file_adv;
+    file_adv.open("advisors.txt");
+    if (file_adv.fail()) {
+        cout << "File did not open.";
+        return player;
+    }
+
+    if (!player.getAdviosrName().empty()) {
+        string currentAdvisor = player.getAdviosrName() + " - " + player.getAdvisorAbility();
+        // Check if this advisor isn't already in the list before adding
+        bool advisorExists = false;
+        for (int i = 0; i < allAdvisors.size(); i++) {
+            if (allAdvisors[i].find(player.getAdviosrName()) != string::npos) {
+                advisorExists = true;
+                break;
+            }
+        }
+        if (!advisorExists) {
+            allAdvisors.push_back(currentAdvisor);
+        }
+    }
+
+    int choice;
+    string adv;
+    string adv2;
+    cout << "Congrats! You have been awarded an Advisor. Enter the number corresponding to the Advisor you would like.\n";
+    for (int i = 0; i < allAdvisors.size(); i++) {
+        cout << "Option #" << i+1 << ": " << allAdvisors[i] << endl;
+    }
+    cin >> choice;
+    if (choice < 1 || choice > allAdvisors.size()) {
+            cout << "Invalid choice. Please try again.\n";
+            file_adv.close();
+            return advisorSelectionMenu(player);
+    }
+    
+    string selectedAdvisor = allAdvisors[choice - 1];
+    int dashPos = selectedAdvisor.find(" - ");
+    string advisorName = selectedAdvisor.substr(0, dashPos);
+    string advisorAbility = selectedAdvisor.substr(dashPos + 3);
+    Player updatedPlayer = player; 
+    updatedPlayer.setAdvisorName(adv);
+    updatedPlayer.setAdvisorAbility(adv2);
+    allAdvisors.erase(allAdvisors.begin()+(choice-1));
+
+    file_adv.close();
+    return player;
+}
+        
     //displays the specific characters character and its stats
 void Game::displayAgeAndInfo(Player player) {
     cout << "\nHere are your players' name and age:\n" << endl;
@@ -215,4 +274,4 @@ void Game::displayMenu(Player player) {
     void creatAsciiLion();
     //creat the asciiLion vector using the asciiAdvisor.cpp
     void creatAsciiAdvisor();
-};
+

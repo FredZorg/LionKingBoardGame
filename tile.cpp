@@ -63,8 +63,6 @@ Player Tile::isPurple(Player player){
     cout << riddlesAndAnswers[0][random] << endl;
     cin >> input;
 
-
-
     //get a random riddle and check their input
     if (riddlesAndAnswers[0][random] == input) {
         cout << "He transforms into a wizard and applauds you for the correct answer. You are surrounded by a gust of wind and he disappears." << endl;
@@ -80,6 +78,8 @@ Player Tile::isPurple(Player player){
     return player;
 }
 
+//Normal tile, need to use random.txt for events, for some events an advisor will negate a negative task
+//cout each event and update each player thing 
 Player Tile::isGreen(Player player){
 
     return player;
