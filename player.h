@@ -5,12 +5,12 @@
 
 class Player {
     private:
-        std::string _playerName, _lionName, _advisorName;
+        std::string _playerName, _lionName, _advisorName, _advisorAbility;
         int _strength, _stamina, _wisdom, _pride_points, _age;
 
     public:
         Player();
-        Player(std::string playerName, std::string name, int strength, int stamina, int wisdom);
+        Player(std::string playerName, std::string name, int pride_points, int strength, int stamina, int wisdom);
 
         // getters
         std::string getPlayerName();
@@ -20,7 +20,7 @@ class Player {
         int getWisdom();
         int getPridePoints();
         int getAge();
-        std::string getAdviosrName();
+        std::string getAdvisorName();
         std::string getAdvisorAbility();
 
         // setters
