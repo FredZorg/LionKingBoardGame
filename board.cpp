@@ -14,6 +14,11 @@
 
 using namespace std;
 
+void Board::addPlayers(Player player1, Player player2){
+    players[0] = player1;
+    players[1] = player2;
+}
+
 //0 for cub path 1 for pride path
 void Board::initializeBoard(int player1, int player2) {
     // Seed random number generator in your main function once
@@ -274,10 +279,11 @@ void Board::movePlayer(int player_index, int dist) {
         _player_position[player_index] += dist;
     }
 
-    _tiles[player_index][_player_position[player_index]].getMessage();
+    if (dist == -10){
+        return;
+    }
 
-
-
+    _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
 }
 
 int Board::getPlayerPosition(int player_index) const {

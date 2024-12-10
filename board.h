@@ -25,6 +25,7 @@ public:
     void displayBoard();
     void movePlayer(int player_index, int dist);
     int getPlayerPosition(int player_index) const;
+    void addPlayers(Player player1, Player player2);
 };
 
 #endif

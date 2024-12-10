@@ -211,8 +211,8 @@ void Game::displayMenu(Player player) {
      }
 }
 
-        //creat the asciiLion vector using the asciiLions.cpp
-        void creatAsciiLion();
-        //creat the asciiLion vector using the asciiAdvisor.cpp
-        void creatAsciiAdvisor();
+    //creat the asciiLion vector using the asciiLions.cpp
+    void creatAsciiLion();
+    //creat the asciiLion vector using the asciiAdvisor.cpp
+    void creatAsciiAdvisor();
 };
