@@ -11,6 +11,7 @@ using namespace std;
 Game::Game(int start){
     currentTurn = start;
 };
+
     //when a character is selected remove it from the lions vector
 void Game::removeSelectedCharacter(int index) {
     lions.erase(lions.begin() + index);
