@@ -16,28 +16,9 @@ int main(){
     Player player;
     Player player2;
     Game game(1);
-    // First populate the lions vector
-    game.createLionsVector();
-    game.createAdvisorVector();
 
-    // Test lion selection menu
-    cout << "\nTesting Advisor Selection Menu:\n" << endl;
-
-    player = game.advisorSelectionMenu(player);
-    cout << "\nVerifying selected lion's attributes:\n" << endl;
-    cout << "Selected Advisors Name: " << player.getAdvisorName() << endl;
-    cout << "Ability: " << player.getAdvisorAbility() << endl;
-
-    player = game.advisorSelectionMenu(player2);
-    cout << "\nVerifying selected lion's attributes:\n" << endl;
-    cout << "Selected Advisors Name: " << player.getAdvisorName() << endl;
-    cout << "Ability: " << player.getAdvisorAbility() << endl;
-
-    player = game.advisorSelectionMenu(player);
-    cout << "\nVerifying selected lion's attributes:\n" << endl;
-    cout << "Selected Advisors Name: " << player.getAdvisorName() << endl;
-    cout << "Ability: " << player.getAdvisorAbility() << endl;
-
+    startGame();
+    
 }
 
 void startGame(){
@@ -91,6 +72,7 @@ bool playerOneStarts(Player playerOne, Player playerTwo){
 
     if ((choice != 1) && (choice != 2)){
         cout << "That is an invalid entry, please enter either 1 or 2." << endl;
+        playerOneStarts(playerOne, playerTwo);
     } else if (choice == random) {
         return true;
     }
