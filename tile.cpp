@@ -8,8 +8,22 @@
 
 //takes in the player and the tile color, based of the tile color it does different things
 Player Tile::getMessage(Player player, int player_index){
-
-
+        switch(color) {
+            case 'B':  // Blue
+                return isBlue(player);
+            case 'R':  // Red
+                return isRed(player, player_index);
+            case 'P':  // Pink
+                return isPink(player);
+            case 'N':  // Brown
+                return isBrown(player, player_index);
+            case 'U':  // Purple
+                return isPurple(player);
+            case 'G':  // Green
+                return isGreen(player);
+            default:   // Grey or Orange or any other color
+                return player;
+    }
     return player;
 }
 

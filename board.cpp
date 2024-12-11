@@ -271,6 +271,7 @@ void Board::displayBoard() {
 
 Player Board::movePlayer(int player_index, int dist) {
 // Increment player position
+// maybe end the game here
     if (dist + _player_position[player_index] >= 52){
         _player_position[player_index] = 52;
     } else if (dist + _player_position[player_index] <= 1){

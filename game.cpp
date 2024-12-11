@@ -114,10 +114,9 @@ Player Game::advisorSelectionMenu (Player player) {
         cout << "(0)" << " - Keep current advisor" << endl;
     }
 
-    for (string str: advisorNames){
-        cout << "(" << (counter + 1) << ")" << advisorNames[counter] << " - " << advisorAbilities[counter] << endl;
-        counter ++;
-    }
+    for (int i = 0; i < advisorNames.size(); i++){
+            cout << "(" << (i + 1) << ")" << advisorNames[i] << " - " << advisorAbilities[i] << endl;
+        }
     cin >> input;
 
     if ((input == 0) && (player.getAdvisorName() != "E")){
@@ -199,7 +198,7 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         board.displayBoard();
     }
     if (lowerInput == "menu") {
-        //displayMenu(player);
+        displayMenu(player);
     }
     else {
         string stupid;
@@ -218,7 +217,7 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
 // should call func that actualy moves pieces and change this to void
 int Game::roll() {
     int rollValue = rand() % (6) + 1;
-    
+    return rollValue;
 }
 
 void Game::createLionsVector() {
