@@ -253,29 +253,39 @@ void Game::displayMenu(Player player) {
     cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
     cout << "4. Review your Position: Check where you are on the board!\n";
     cout << "5. Review your progress: Restart if you are not happy with decisons that YOU have made.\n";
+    cout << "6. Review your progress: See your TOTAL Pride Points if the game ended right now. ";
     cin >> menu;
-     //if (answer == 0) return answer;
-
-     if (menu == 1) {
-         displayAgeAndInfo(player);
-     }
-     else if (menu == 2) {
-         displayGameStats(player);
-     }
-     else if (menu == 3) {
-         player.getAdvisorName();
-         player.getAdvisorAbility();
-     }
+    
+    if (menu == 1) {
+        displayAgeAndInfo(player);
+    }
+    else if (menu == 2) {
+        displayGameStats(player);
+    }
+    else if (menu == 3) {
+        player.getAdvisorName();
+        player.getAdvisorAbility();
+    }
     else if (menu == 4) {
-    // ?    displayBoard();
+        // ?    displayBoard();
     }
     else if (menu == 5) {
         // restart
     }
-     else {
-         cout << "Invalid menu option.\n";
-         displayMenu(player);
-     }
+    else if (menu == 6) {
+        int strengthToPride = player.getPridePoints(); 
+        int wisdomToPride = player.getWisdom(); 
+        int staminaToPride = player.getStamina(); 
+        int total = strengthToPride + wisdomToPride + staminaToPride; 
+        total %= 100; 
+        int newPride = total * 1000; 
+        newPride += player.getPridePoints(); 
+        cout << "Your TOTAL Pride Points: " << newPride; 
+    }
+    else {
+        cout << "Invalid menu option.\n";
+        displayMenu(player);
+    }
 }
 
     //creat the asciiLion vector using the asciiLions.cpp
