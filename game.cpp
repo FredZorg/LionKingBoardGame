@@ -180,7 +180,8 @@ int Game::prideOrTrain(Player player) {
 }
 
     //choose whether to roll or go to the menu
-void Game::rollOrMenuInput(Player player) {
+Game::GameState Game::rollOrMenuInput(Player player, Board board) {
+    GameState state;
     string input;
     string lowerInput;
     cout << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\n For dice, type \"dice\"";
@@ -189,7 +190,13 @@ void Game::rollOrMenuInput(Player player) {
             lowerInput += tolower(input[i]);
         }
     if (lowerInput == "dice") {
-        roll();
+        int rollResults = roll();
+        cout << "You rolled a " << rollResults << "!" << endl;
+        
+        int playerIndex = (getCurrentTurn() % 2);
+        player = board.movePlayer(playerIndex, rollResults);
+        
+        board.displayBoard();
     }
     if (lowerInput == "menu") {
         //displayMenu(player);
@@ -198,15 +205,20 @@ void Game::rollOrMenuInput(Player player) {
         string stupid;
         cout << "Invalid input - press enter to make a VALID decision";
         cin >> stupid;
-        rollOrMenuInput(player);
+        rollOrMenuInput(player, board);
 
     }
+    
+    state.player = player;
+    state.board = board;
+    
+    return state;
 }
-        //rolls a number between one and six
-        // should call func that actualy moves pieces and change this to void
+//rolls a number between one and six
+// should call func that actualy moves pieces and change this to void
 int Game::roll() {
     int rollValue = rand() % (6) + 1;
-    return rollValue;
+    
 }
 
 void Game::createLionsVector() {

@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cctype>
 #include "game.h"
-//#include "board.h"
+#include "board.h"
 
 using namespace std;
 
@@ -13,20 +13,23 @@ bool playerOneStarts(Player playerOne, Player playerTwo);
 
 int main(){
     srand(time(0));
-    Player player;
-    Player player2;
-    Game game(1);
 
     startGame();
-    
+
+    return 0;
 }
 
 void startGame(){
     Game game(0);
     Player player1;
     Player player2;
+    Board board;
     string inputS;
     int random;
+    int trainOrCub1;
+    int trainOrCub2;
+
+    board.addPlayers(player1, player2);
 
     //introduction
     cout << "Welcome to Ruler of the Pride! Your goal is to " << endl;
@@ -54,11 +57,21 @@ void startGame(){
     player1 = game.lionSelectionMenu(player1);
     player2 = game.lionSelectionMenu(player2);
 
+    trainOrCub1 = game.prideOrTrain(player1);
+    trainOrCub2 = game.prideOrTrain(player2);
+
+    board.initializeBoard(trainOrCub1, trainOrCub2);
+
     while (game.getIsNotDone()) {
+        Game::GameState state;
         if(game.getCurrentTurn() % 2 == 0){
-            game.rollOrMenuInput(player1);
+            state = game.rollOrMenuInput(player1, board);
+            player1 = state.player;
+            board = state.board;
         } else {
-            game.rollOrMenuInput(player2);
+            state = game.rollOrMenuInput(player2, board);
+            player2 = state.player;
+            board = state.board;
         }
     }
 }
@@ -72,7 +85,7 @@ bool playerOneStarts(Player playerOne, Player playerTwo){
 
     if ((choice != 1) && (choice != 2)){
         cout << "That is an invalid entry, please enter either 1 or 2." << endl;
-        playerOneStarts(playerOne, playerTwo);
+        return playerOneStarts(playerOne, playerTwo);
     } else if (choice == random) {
         return true;
     }

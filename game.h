@@ -1,6 +1,5 @@
 #ifndef GAME_H
 #define GAME_H
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,14 +7,20 @@
 #include <cctype>
 #include <fstream>
 #include "player.h"
+#include "board.h"
 
 class Game {
     public:
         Game(int start);
+        
+        struct GameState {
+            Player player;
+            Board board;
+        };
+        
         void removeSelectedCharacter(int index);
         Player lionSelectionMenu(Player player);
         void displayStats(Player player);
-        int prideOrTrain();
         void rollOrMenuInput();
         int roll();
         void playerNameInput(Player player);
@@ -26,12 +31,13 @@ class Game {
         void displayAgeAndInfo(Player player);
         void displayGameStats(Player player);
         int prideOrTrain(Player player);
-        void rollOrMenuInput(Player player);
+        GameState rollOrMenuInput(Player player, Board board);
         void displayMenu(Player player);
         void createAdvisorVector();
         Player advisorSelectionMenu (Player player);
         bool getIsNotDone();
         void setIsNotDone(bool thing);
+        
 
 
     private:

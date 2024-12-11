@@ -269,7 +269,7 @@ void Board::displayBoard() {
     }
 }
 
-void Board::movePlayer(int player_index, int dist) {
+Player Board::movePlayer(int player_index, int dist) {
 // Increment player position
     if (dist + _player_position[player_index] >= 52){
         _player_position[player_index] = 52;
@@ -280,10 +280,10 @@ void Board::movePlayer(int player_index, int dist) {
     }
 
     if (dist == -10){
-        return;
+        return players[player_index];
     }
 
-    _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
+    return _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
 }
 
 int Board::getPlayerPosition(int player_index) const {

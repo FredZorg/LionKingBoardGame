@@ -7,7 +7,7 @@
 #include <iostream>
 
 //takes in the player and the tile color, based of the tile color it does different things
-Player Tile::getMessage(Player player, int player_input){
+Player Tile::getMessage(Player player, int player_index){
 
 
     return player;

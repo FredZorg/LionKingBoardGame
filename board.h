@@ -23,7 +23,7 @@ public:
     void displayTrack(int player_index);
     void initializeBoard(int player1, int player2);
     void displayBoard();
-    void movePlayer(int player_index, int dist);
+    Player movePlayer(int player_index, int dist);
     int getPlayerPosition(int player_index) const;
     void addPlayers(Player player1, Player player2);
 };
