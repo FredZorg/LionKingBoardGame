@@ -11,6 +11,7 @@ using namespace std;
 
 Game::Game(int start){
     currentTurn = start;
+    isNotDone = true;
 };
 
 //when a character is selected remove it from the lions vector
@@ -97,7 +98,12 @@ void Game::createAdvisorVector() {
     advisorAbilities.push_back("Super Speed (the ability to run 4x faster than the maximum speed of lions)");
 }
 
-
+bool Game::getIsNotDone(){
+    return isNotDone;
+}
+void Game::setIsNotDone(bool thing){
+    isNotDone = thing;
+}
 
 Player Game::advisorSelectionMenu (Player player) {
     cout << "What advisor do you want to pick" << endl;

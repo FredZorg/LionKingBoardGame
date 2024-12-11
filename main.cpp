@@ -72,9 +72,14 @@ void startGame(){
     //select lions
     player1 = game.lionSelectionMenu(player1);
     player2 = game.lionSelectionMenu(player2);
-    
-    
-    
+
+    while (game.getIsNotDone()) {
+        if(game.getCurrentTurn() % 2 == 0){
+            game.rollOrMenuInput(player1);
+        } else {
+            game.rollOrMenuInput(player2);
+        }
+    }
 }
 
 bool playerOneStarts(Player playerOne, Player playerTwo){

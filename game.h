@@ -30,6 +30,8 @@ class Game {
         void displayMenu(Player player);
         void createAdvisorVector();
         Player advisorSelectionMenu (Player player);
+        bool getIsNotDone();
+        void setIsNotDone(bool thing);
 
 
     private:
@@ -38,6 +40,7 @@ class Game {
         std::vector<std::string> advisorNames;
         std::vector<std::string> advisorAbilities;
         int currentTurn; //0 for player 1, 1 for player 2
+        bool isNotDone;
 };
 
 #endif
