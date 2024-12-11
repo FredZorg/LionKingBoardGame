@@ -1,6 +1,7 @@
 //Abey Saleh and Fred Zordgrager Group Project
 #include "board.h"
 #include <iostream>
+#include <cstdlib> // For rand() and srand()
 #define RED "\033[48;2;230;10;10m"
 #define GREEN "\033[48;2;34;139;34m" /* Grassy Green (34,139,34) */
 #define BLUE "\033[48;2;10;10;230m"
@@ -13,6 +14,15 @@
 #define BLACK_BG "\033[48;2;0;0;0m"
 
 using namespace std;
+
+Player Board::isBlue(Player player){
+    cout << "You’ve found a beautiful oasis! Enjoy!" << endl;
+    cout << "+200 Wisdom" << endl << "+200 Strenght" << endl << "+200 Stamina" << endl;
+    player.addWisdom(200);
+    player.addStrength(200);
+    player.addStamina(200);
+    return player;
+}
 
 void Board::addPlayers(Player player1, Player player2){
     players[0] = player1;
@@ -35,9 +45,6 @@ void Board::initializeBoard(int player1, int player2) {
 
 
 }
-
-#include <cstdlib> // For rand() and srand()
-#include <ctime> // For time()
 
 void Board::initializeCubPath(int player_index) {
     Tile temp;
@@ -269,9 +276,15 @@ void Board::displayBoard() {
     }
 }
 
+char Board::getTileColor(int player_index, int position) const {
+    return _tiles[player_index][position].color;
+}
+
 Player Board::movePlayer(int player_index, int dist) {
-// Increment player position
-// maybe end the game here
+    // Store original position for brown tile
+    int originalPosition = _player_position[player_index];
+
+    // Increment player position
     if (dist + _player_position[player_index] >= 52){
         _player_position[player_index] = 52;
     } else if (dist + _player_position[player_index] <= 1){
@@ -284,7 +297,46 @@ Player Board::movePlayer(int player_index, int dist) {
         return players[player_index];
     }
 
-    return _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
+    char currentColor = _tiles[player_index][_player_position[player_index]].color;
+    
+    switch(currentColor) {
+        case 'B': // Blue - Oasis
+            cout << "You landed on a blue tile! You get another turn!" << endl;
+            return isBlue(players[player_index]);
+        
+        case 'R': // Red - Graveyard
+            cout << "Uh-oh, you've stumbled into the Graveyard!" << endl;
+            cout << "-100 to all stats and moving back 10 tiles!" << endl;
+            players[player_index].addWisdom(-100);
+            players[player_index].addStrength(-100);
+            players[player_index].addStamina(-100);
+            _player_position[player_index] = max(1, _player_position[player_index] - 10);
+            return players[player_index];
+            
+        case 'P': // Pink - Enrichment
+            cout << "Welcome to the land of enrichment!" << endl;
+            cout << "+300 to all stats!" << endl;
+            players[player_index].addWisdom(300);
+            players[player_index].addStrength(300);
+            players[player_index].addStamina(300);
+            return players[player_index];
+            
+        case 'N': // Brown - Hyenas
+            cout << "You got caught by Hyenas!" << endl;
+            cout << "-300 to all stats and moving back to previous position!" << endl;
+            players[player_index].addWisdom(-300);
+            players[player_index].addStrength(-300);
+            players[player_index].addStamina(-300);
+            _player_position[player_index] = originalPosition;
+            return players[player_index];
+            
+        case 'U': // Purple - Riddle
+        case 'G': // Green - Random Event
+            return _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
+            
+        default: // Grey, Orange, or other
+            return players[player_index];
+    }
 }
 
 int Board::getPlayerPosition(int player_index) const {

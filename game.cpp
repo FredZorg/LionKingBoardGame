@@ -12,6 +12,9 @@ using namespace std;
 Game::Game(int start){
     currentTurn = start;
     isNotDone = true;
+    createLionsVector();
+    createAdvisorVector();
+    creatAsciiLion();
 };
 
 //when a character is selected remove it from the lions vector
@@ -179,40 +182,49 @@ int Game::prideOrTrain(Player player) {
 }
 
     //choose whether to roll or go to the menu
-Game::GameState Game::rollOrMenuInput(Player player, Board board) {
-    GameState state;
-    string input;
-    string lowerInput;
-    cout << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\n For dice, type \"dice\"";
-    cin >> input;
-    for(int i = 0; i < input.length(); i++) {
+    Game::GameState Game::rollOrMenuInput(Player player, Board board) {
+        GameState state;
+        state.extraTurn = false;
+        string input;
+        string lowerInput;
+        cout << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\nFor dice, type \"dice\"";
+        cin >> input;
+        
+        for(int i = 0; i < input.length(); i++) {
             lowerInput += tolower(input[i]);
         }
-    if (lowerInput == "dice") {
-        int rollResults = roll();
-        cout << "You rolled a " << rollResults << "!" << endl;
         
-        int playerIndex = (getCurrentTurn() % 2);
-        player = board.movePlayer(playerIndex, rollResults);
+        if (lowerInput == "dice") {
+            int rollResults = roll();
+            cout << "You rolled a " << rollResults << "!" << endl;
+            
+            int playerIndex = (getCurrentTurn() % 2);
+            player = board.movePlayer(playerIndex, rollResults);
+            
+            board.displayBoard();
+            
+            // Check if landed on blue tile and set flag in GameState
+            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
+                cout << "Extra turn granted!" << endl;
+                state.extraTurn = true;  // Add this flag to GameState struct
+            } else {
+                state.extraTurn = false;
+            }
+        } else if (lowerInput == "menu") {
+            displayMenu(player);
+            return rollOrMenuInput(player, board);
+        } else {
+            string stupid;
+            cout << "Invalid input - press enter to make a VALID decision";
+            cin >> stupid;
+            return rollOrMenuInput(player, board);
+        }
         
-        board.displayBoard();
+        state.player = player;
+        state.board = board;
+        
+        return state;
     }
-    if (lowerInput == "menu") {
-        displayMenu(player);
-    }
-    else {
-        string stupid;
-        cout << "Invalid input - press enter to make a VALID decision";
-        cin >> stupid;
-        rollOrMenuInput(player, board);
-
-    }
-    
-    state.player = player;
-    state.board = board;
-    
-    return state;
-}
 //rolls a number between one and six
 // should call func that actualy moves pieces and change this to void
 int Game::roll() {

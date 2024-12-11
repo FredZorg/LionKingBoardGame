@@ -11,17 +11,16 @@
 
 class Game {
     public:
-        Game(int start);
-        
         struct GameState {
             Player player;
             Board board;
+            bool extraTurn = false;
         };
         
+        Game(int start);
         void removeSelectedCharacter(int index);
         Player lionSelectionMenu(Player player);
         void displayStats(Player player);
-        void rollOrMenuInput();
         int roll();
         void playerNameInput(Player player);
         void createLionsVector();

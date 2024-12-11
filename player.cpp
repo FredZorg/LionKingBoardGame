@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include <string>
 #include "player.h"
 
@@ -17,6 +15,7 @@ Player::Player() {
     _advisorAscii = "E";
     _lionAscii = "E";
     _age = 0;
+    _choice = 0;
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
@@ -25,6 +24,7 @@ Player::Player(string playerName, string name, int pride_points, int strength, i
     _advisorAscii = advisorAscii;
     _lionAscii = lionAscii;
     _pride_points = 0;
+    _choice = 0;
     if (stamina >= 100 && stamina <= 1000) {
         _stamina = stamina;
     }
@@ -67,6 +67,9 @@ int Player :: getPridePoints() {
 int Player :: getAge() {
     return _age;
 }
+int Player::getChoice(){
+    return _choice;
+}
 
 string Player :: getAdvisorName() {
     return _advisorName;
@@ -76,7 +79,11 @@ string Player :: getAdvisorAbility() {
     return _advisorAbility;
 }
 
+
 // setters (should i error check?)
+void Player::setChoice(int choice){
+    _choice = choice;
+}
 void Player :: setAdvisorAbility(string advisorAbility) {
     _advisorAbility = advisorAbility;
 }

@@ -1,8 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <cstdlib>
-#include <cctype>
 #include "game.h"
 #include "board.h"
 
@@ -58,12 +56,18 @@ void startGame(){
     player2 = game.lionSelectionMenu(player2);
 
     trainOrCub1 = game.prideOrTrain(player1);
+    player1.setChoice(trainOrCub1);
     trainOrCub2 = game.prideOrTrain(player2);
+    player2.setChoice(trainOrCub2);
 
     board.initializeBoard(trainOrCub1, trainOrCub2);
 
     while (game.getIsNotDone()) {
+        board.displayBoard();
         Game::GameState state;
+        
+        cout << "\nPlayer " << (game.getCurrentTurn() % 2 + 1) << "'s Turn" << endl;
+        
         if(game.getCurrentTurn() % 2 == 0){
             state = game.rollOrMenuInput(player1, board);
             player1 = state.player;
@@ -72,6 +76,16 @@ void startGame(){
             state = game.rollOrMenuInput(player2, board);
             player2 = state.player;
             board = state.board;
+        }
+        
+        // Only increment turn if no extra turn was granted
+        if (!state.extraTurn) {
+            game.setCurrentTurn(game.getCurrentTurn() + 1);
+        }
+        
+        // Check for game end
+        if (board.getPlayerPosition(0) >= 51 || board.getPlayerPosition(1) >= 51) {
+            game.setIsNotDone(false);
         }
     }
 }
