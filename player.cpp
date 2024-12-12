@@ -150,3 +150,33 @@ void Player :: addWisdom(int wisdom) {
 void Player::addPridePoints(int pride) {
     _pride_points += pride;
 }
+int Player :: getBlueOccurrences() {
+    return blueCounter; 
+}
+int Player :: getPinkOccurrences() {
+    return pinkCounter;
+}
+int Player :: getBrownOccurrences() {
+    return brownCounter; 
+}
+int Player :: getPurpleOccurrences() {
+    return purpleCounter; 
+}
+int Player :: getGreenOccurrences() {
+    return greenCounter; 
+}
+void Player :: addGreenCounter(Player player) {
+    greenCounter++; 
+}
+void Player :: addPurpleCounter(Player player) {
+    purpleCounter++; 
+}
+void Player :: addBrownCounter(Player player) {
+    brownCounter++; 
+}
+void Player :: addPinkCounter(Player player) {
+    pinkCounter++; 
+}
+void Player :: addBlueCounter(Player player) {
+    blueCounter++; 
+}

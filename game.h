@@ -19,6 +19,7 @@ class Game {
         };
         
         Game(int start);
+        void stupidSorting(Player player);
         void removeSelectedCharacter(int index);
         Player lionSelectionMenu(Player player);
         void displayStats(Player player);

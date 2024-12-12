@@ -199,9 +199,10 @@ int Game::prideOrTrain(Player player) {
 //choose whether to roll or go to the menu
 Game::GameState Game::rollOrMenuInput(Player player, Board board) {
     GameState state;
-    state.extraTurn = true;
+    state.extraTurn = false;
     string input;
     string lowerInput;
+
     cout << endl << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\nFor dice, type \"dice\"" << endl;
     cin >> input;
 
@@ -210,26 +211,29 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
     }
 
     if (lowerInput == "dice") {
-        int rollResults = roll();
-        system("clear");
-        cout << "You rolled a " << rollResults << "!" << endl;
+        bool extraTurn = true; // NEW: Track if the player gets another roll
+        while (extraTurn) {
+            int rollResults = roll();
+            system("clear");
+            cout << "You rolled a " << rollResults << "!" << endl;
 
-        int playerIndex = (getCurrentTurn() % 2);
-        player = board.movePlayer(playerIndex, rollResults);
+            int playerIndex = (getCurrentTurn() % 2);
+            player = board.movePlayer(playerIndex, rollResults);
+            
+            board.displayBoard();
+            
+            // Check if player landed on a blue tile
+            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
+                cout << "Extra turn granted!" << endl;
+                extraTurn = true; // Allow another roll
+            } else {
+                extraTurn = false; // End the extra turn loop
+            }
 
-        board.displayBoard();
-
-        // Check if landed on blue tile and set flag in GameState
-        if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
-            cout << "Extra turn granted!" << endl;
-            state.extraTurn = true;  // Add this flag to GameState struct
-            return rollOrMenuInput(player, board);
-        } else {
-            state.extraTurn = false;
-        }
-
-        if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
-            advisorSelectionMenu(player);
+            // Handle special case for pink tile (advisor selection)
+            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
+                player = advisorSelectionMenu(player);
+            }
         }
 
         bool entryValid = false;
@@ -238,7 +242,7 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         while (!entryValid) {
             cout << player.getPlayerName() << " type 1 if you are ready to pass your turn on to the next player." << endl;
             cin >> entry;
-            if (entry == 1){
+            if (entry == 1) {
                 entryValid = true;
                 system("clear");
             } else {
@@ -265,6 +269,48 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
 int Game::roll() {
     int rollValue = rand() % (6) + 1;
     return rollValue;
+}
+
+void Game::stupidSorting(Player player) {
+    vector <int> nums; 
+    int temp; 
+    nums.push_back(player.getBlueOccurrences()); 
+    nums.push_back(player.getPinkOccurrences()); 
+    nums.push_back(player.getBrownOccurrences()); 
+    nums.push_back(player.getPurpleOccurrences()); 
+    nums.push_back(player.getGreenOccurrences()); 
+    for (int i = 0; i < nums.size()-1; i++) {
+            for (int j = i+1; j < nums.size(); j++) {
+                if (nums[i] < nums[j]) {
+                    temp = nums[i]; 
+                    nums[i] = nums[j]; 
+                    nums[j] = temp; 
+                }
+            }
+    }
+    vector <string> fred; 
+        
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] == player.getBlueOccurrences()) {
+            fred[i] = "blue"; 
+        }
+        else if (nums[i] == player.getPinkOccurrences()) {
+            fred[i] = "pink"; 
+        }
+        else if (nums[i] == player.getBrownOccurrences()) {
+            fred[i] = "brown"; 
+        }
+        else if (nums[i] == player.getPurpleOccurrences()) {
+            fred[i] = "purple"; 
+        }
+        else if (nums[i] == player.getGreenOccurrences()) {
+            fred[i] = "green"; 
+        }
+    }
+    
+    for (int i = 0; i < fred.size(); i++) {
+        cout << "You landed on the " << fred[i] << nums[i] << "times.\n"; 
+    }
 }
 
 void Game::createLionsVector() {
