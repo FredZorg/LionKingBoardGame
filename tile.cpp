@@ -41,8 +41,8 @@ Player Tile::isPurple(Player player){
     cout << "The answer is " << answer << endl;
 
     //get a random riddle and check their input
-    cout << (answer == input) << endl;
-    if (answer == input) {
+    cout << (answer.compare(input)) << endl;
+    if (answer.compare(input)) {
         cout << "He transforms into a wizard and applauds you for the correct answer. You are surrounded by a gust of wind and he disappears." << endl;
         cout << "You feel stronger:" << endl;
         cout << "500 Wisdom" << endl << "500 Strength" << endl << "500 Stamina" << endl;
