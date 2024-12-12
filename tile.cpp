@@ -31,8 +31,8 @@ Player Tile::isPurple(Player player){
 
     cout << "You stumble across a scruffy old man. He asks you this riddle:" << endl;
     cout << riddlesAndAnswers[0][random] << endl;
-    cout << "Input your asnwer" << endl;
-    cin.ignore(10000, '\n'); 
+    cout << "Input your answer" << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
     getline(cin, input);
     cout << "The answer is " << answer << endl;
 
@@ -45,7 +45,7 @@ Player Tile::isPurple(Player player){
         player.addStrength(500);
         player.addStamina(500);
     } else {
-        cout << "He walks away looking disapointed and nothing happens." << endl;
+        cout << "He walks away looking disappointed and nothing happens." << endl;
         cout << input << ", the correct answer was " << riddlesAndAnswers[1][random] << endl;
     }
 
