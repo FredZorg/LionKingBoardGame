@@ -8,6 +8,7 @@ class Player {
     private:
         std::string _playerName, _lionName, _advisorName, _advisorAbility, _lionAscii, _advisorAscii;
         int _strength, _stamina, _wisdom, _pride_points, _age, _choice;
+        bool gameIsDone;
 
     public:
         Player();
@@ -24,6 +25,7 @@ class Player {
         std::string getAdvisorName();
         std::string getAdvisorAbility();
         int getChoice();
+        bool getGameIsDone();
 
         // setters
         void setAge(int age);
@@ -36,11 +38,13 @@ class Player {
         void setAdvisorName(std::string name);
         void setAdvisorAbility(std::string advisorAbility);
         void setChoice(int choice);
+        void setGameIsDone(bool duh);
 
         //adding
         void addStrength(int strength);
         void addStamina(int stamina);
         void addWisdom(int wisdom);
+        void addPridePoints(int pride);
 };
 
 #endif

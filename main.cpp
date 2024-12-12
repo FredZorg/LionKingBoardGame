@@ -50,51 +50,110 @@ void startGame(){
     cout << "To pick the starting order "<< player1.getPlayerName() << " must pick either 1 or 2." << endl;
     if (playerOneStarts(player1, player2)){
         game.setCurrentTurn(0);
+        //select lions
+        bool entryValid = false;
+        int entry = 0;
+        
+        while (!entryValid) {
+            cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
+            cin >> entry;
+            if (entry == 1){
+                player1 = game.lionSelectionMenu(player1);
+                system("clear");
+                entryValid = true;
+                break;
+            } else {
+                system("clear");
+                cout << "That was an invalid entry." << endl;
+            }
+        }
+    
+        entryValid = false;
+    
+        while (!entryValid) {
+            cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
+            cin >> entry;
+            if (entry == 1){
+                player2 = game.lionSelectionMenu(player2);
+                system("clear");
+                entryValid = true;
+                break;
+            } else {
+                system("clear");
+                cout << "That was an invalid entry." << endl;
+            }
+        }
     } else {
         game.setCurrentTurn(1);
-    }
-
-    //select lions
-    bool entryValid = false;
-    int entry = 0;
-
-    while (!entryValid) {
-        cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
-        cin >> entry;
-        if (entry == 1){
-            player1 = game.lionSelectionMenu(player1);
-            system("clear");
-            entryValid = true;
-            break;
-        } else {
-            system("clear");
-            cout << "That was an invalid entry." << endl;
+        //select lions
+        bool entryValid = false;
+        int entry = 0;
+        
+        while (!entryValid) {
+            cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
+            cin >> entry;
+            if (entry == 1){
+                player2 = game.lionSelectionMenu(player2);
+                system("clear");
+                entryValid = true;
+                break;
+            } else {
+                system("clear");
+                cout << "That was an invalid entry." << endl;
+            }
+        }
+    
+        entryValid = false;
+    
+        while (!entryValid) {
+            cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
+            cin >> entry;
+            if (entry == 1){
+                player1 = game.lionSelectionMenu(player1);
+                system("clear");
+                entryValid = true;
+                break;
+            } else {
+                system("clear");
+                cout << "That was an invalid entry." << endl;
+            }
         }
     }
-    entryValid = false;
 
-    while (!entryValid) {
-        cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
-        cin >> entry;
-        if (entry == 1){
-            player2 = game.lionSelectionMenu(player2);
-            system("clear");
-            entryValid = true;
-            break;
-        } else {
-            system("clear");
-            cout << "That was an invalid entry." << endl;
-        }
-    }
+    
 
     trainOrCub1 = game.prideOrTrain(player1);
+    if (trainOrCub1 == 0){
+        player1 = game.advisorSelectionMenu(player1);
+        player1.addPridePoints(-5000);
+        player1.addWisdom(1000);
+        player1.addStrength(500);
+        player1.addStamina(500);
+    } else {
+        player1.addPridePoints(5000);
+        player1.addWisdom(200);
+        player1.addStrength(200);
+        player1.addStamina(200);
+    }
     player1.setChoice(trainOrCub1);
     trainOrCub2 = game.prideOrTrain(player2);
+    if (trainOrCub2 == 0){
+        player2 = game.advisorSelectionMenu(player2);
+        player2.addPridePoints(-5000);
+        player2.addWisdom(1000);
+        player2.addStrength(500);
+        player2.addStamina(500);
+    } else {
+        player2.addPridePoints(5000);
+        player2.addWisdom(200);
+        player2.addStrength(200);
+        player2.addStamina(200);
+    }
     player2.setChoice(trainOrCub2);
 
     board.initializeBoard(trainOrCub1, trainOrCub2);
 
-    while (game.getIsNotDone()) {
+    while (!player1.getGameIsDone() && !player2.getGameIsDone()) {
         Game::GameState state;
 
         cout << "\nPlayer " << (game.getCurrentTurn() % 2 + 1) << "'s Turn" << endl;

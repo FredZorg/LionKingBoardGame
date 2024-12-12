@@ -172,7 +172,7 @@ void Game::displayGameStats(Player player) {
     cout << "Stamina: " << player.getStamina() << endl;
     cout << "Wisdom: " << player.getWisdom() << endl;
 }
-    //have them pick to the pride lands or to cub training, ture if pride lands false if cub training
+//0 is cub training, 1 is pride lands
 int Game::prideOrTrain(Player player) {
     int answer;
     cout << player.getPlayerName() << " you have picked your character. Now, the game begins." << endl;
@@ -211,6 +211,7 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
 
     if (lowerInput == "dice") {
         int rollResults = roll();
+        system("clear");
         cout << "You rolled a " << rollResults << "!" << endl;
 
         int playerIndex = (getCurrentTurn() % 2);
@@ -225,6 +226,23 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         } else {
             state.extraTurn = false;
         }
+        
+        if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
+            advisorSelectionMenu(player);
+        } 
+        
+        bool entryValid = false;
+        int entry;
+        
+        while (!entryValid) {
+            cout << player.getPlayerName() << " type 1 if you are ready to pass your turn on to the next player." << endl;
+            cin >> entry;
+            if (entry == 1){
+                entryValid = true;
+            } else {
+                cout << "That is an invalid input please input 1." << endl;
+            }
+        }    
     } else if (lowerInput == "menu") {
         displayMenu(player, board);
         return rollOrMenuInput(player, board);

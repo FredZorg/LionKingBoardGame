@@ -33,7 +33,7 @@ Player Tile::isPurple(Player player){
     cin >> input;
 
     //get a random riddle and check their input
-    if (riddlesAndAnswers[0][random] == input) {
+    if (riddlesAndAnswers[1][random] == input) {
         cout << "He transforms into a wizard and applauds you for the correct answer. You are surrounded by a gust of wind and he disappears." << endl;
         cout << "You feel stronger:" << endl;
         cout << "500 Wisdom" << endl << "500 Strenght" << endl << "500 Stamina" << endl;
@@ -71,7 +71,7 @@ Player Tile::isGreen(Player player) {
     while (true) {
         int randy = rand() % 2 + 1;
         if (randy == 1) {
-            cout << "You land on a green tile and nothing happens." << endl;
+            cout << "You are both unlucky and lucky, isn't that kind of not sucky." << endl;
             return player;
         }
 
@@ -110,18 +110,18 @@ Player Tile::isGreen(Player player) {
             player.setPridePoints(morePride);
             cout << desc << endl;
             cout << "Congrats! You spun well. Enjoy " << newPridePoints << " more Pride Points\n";
-            cout << "Current Pride Points: " << player.getPridePoints();
+            cout << "Current Pride Points: " << player.getPridePoints() << endl;
         } else {
             if (advisorName == player.getAdvisorName()) {
                 cout << "Congrats! You did not spin well, but your Advisor saved you.\n";
                 cout << "You did not lose any Pride Points!\n";
-                cout << "Current Pride Points: " << player.getPridePoints();
+                cout << "Current Pride Points: " << player.getPridePoints() << endl;
             } else {
                 int lossPride = player.getPridePoints() + newPridePoints;
                 player.setPridePoints(lossPride);
                 cout << "Unfortunately, you did not spin well.\n";
                 cout << "You lost " << newPridePoints << " Pride Points\n";
-                cout << "Current Pride Points: " << player.getPridePoints();
+                cout << "Current Pride Points: " << player.getPridePoints() << endl;
             }
         }
 

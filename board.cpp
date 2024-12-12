@@ -287,6 +287,8 @@ Player Board::movePlayer(int player_index, int dist) {
     // Increment player position
     if (dist + _player_position[player_index] >= 52){
         _player_position[player_index] = 52;
+        players[player_index].setGameIsDone(true);
+        return players[player_index];
     } else if (dist + _player_position[player_index] <= 1){
         _player_position[player_index] = 1;
     } else {
@@ -298,12 +300,14 @@ Player Board::movePlayer(int player_index, int dist) {
     }
 
     char currentColor = _tiles[player_index][_player_position[player_index]].color;
-    
+    bool entryValid = false;
+    int entry;
+
     switch(currentColor) {
         case 'B': // Blue - Oasis
             cout << "You landed on a blue tile! You get another turn!" << endl;
             return isBlue(players[player_index]);
-        
+
         case 'R': // Red - Graveyard
             cout << "Uh-oh, you've stumbled into the Graveyard!" << endl;
             cout << "-100 to all stats and moving back 10 tiles!" << endl;
@@ -312,28 +316,40 @@ Player Board::movePlayer(int player_index, int dist) {
             players[player_index].addStamina(-100);
             _player_position[player_index] = max(1, _player_position[player_index] - 10);
             return players[player_index];
-            
+
         case 'P': // Pink - Enrichment
             cout << "Welcome to the land of enrichment!" << endl;
             cout << "+300 to all stats!" << endl;
+            cout << "You also get to pick an advisor!!!" << endl;
+            
+            while (!entryValid) {
+                cout << players[player_index].getPlayerName() << " type 1 if you are ready to pick an advisor." << endl;
+                cin >> entry;
+                if (entry == 1){
+                    entryValid = true;
+                } else {
+                    cout << "That is an invalid input please input 1." << endl;
+                }
+            }
+            
             players[player_index].addWisdom(300);
             players[player_index].addStrength(300);
             players[player_index].addStamina(300);
             return players[player_index];
-            
+
         case 'N': // Brown - Hyenas
             cout << "You got caught by Hyenas!" << endl;
-            cout << "-300 to all stats and moving back to previous position!" << endl;
+            cout << "-300 to all stats and you don't move forward!" << endl;
             players[player_index].addWisdom(-300);
             players[player_index].addStrength(-300);
             players[player_index].addStamina(-300);
             _player_position[player_index] = originalPosition;
             return players[player_index];
-            
+
         case 'U': // Purple - Riddle
         case 'G': // Green - Random Event
             return _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
-            
+
         default: // Grey, Orange, or other
             return players[player_index];
     }

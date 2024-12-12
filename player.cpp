@@ -7,6 +7,7 @@ using namespace std;
 //0 is cubTraining 1 is to the pride
 Player::Player() {
     _playerName = "";
+    _pride_points = 20000;
     _lionName = "";
     _stamina = 100;
     _strength = 100;
@@ -17,6 +18,7 @@ Player::Player() {
     _lionAscii = "E";
     _age = 0;
     _choice = 0;
+    gameIsDone = false;
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
@@ -24,7 +26,7 @@ Player::Player(string playerName, string name, int pride_points, int strength, i
     _lionName = name;
     _advisorAscii = advisorAscii;
     _lionAscii = lionAscii;
-    _pride_points = 0;
+    _pride_points = 20000;
     _choice = 0;
     if (stamina >= 100 && stamina <= 1000) {
         _stamina = stamina;
@@ -80,8 +82,15 @@ string Player :: getAdvisorAbility() {
     return _advisorAbility;
 }
 
+bool Player::getGameIsDone(){
+    return gameIsDone;
+}
+
 
 // setters (should i error check?)
+void Player::setGameIsDone(bool duh){
+    gameIsDone = duh;
+}
 void Player::setChoice(int choice){
     _choice = choice;
 }
@@ -135,4 +144,7 @@ void Player :: addWisdom(int wisdom) {
     } else {
         _wisdom += wisdom;
     }
+}
+void Player::addPridePoints(int pride) {
+    _pride_points += pride;
 }
