@@ -1,3 +1,4 @@
+//Abey Saleh and Fred Zordgrager Group Project
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -23,7 +24,6 @@ void startGame(){
     Player player2;
     Board board;
     string inputS;
-    int random;
     int trainOrCub1;
     int trainOrCub2;
 
@@ -40,20 +40,52 @@ void startGame(){
     cout << "Before starting player one please enter your name." << endl;
     cin >> inputS;
     player1.setPlayerName(inputS);
+    system("clear");
+
     cout << "Great! Player two please enter your name." << endl;
     cin >> inputS;
     player2.setPlayerName(inputS);
+    system("clear");
 
     cout << "To pick the starting order "<< player1.getPlayerName() << " must pick either 1 or 2." << endl;
-    if (playerOneStarts(player1,player2)){
+    if (playerOneStarts(player1, player2)){
         game.setCurrentTurn(0);
     } else {
         game.setCurrentTurn(1);
     }
 
     //select lions
-    player1 = game.lionSelectionMenu(player1);
-    player2 = game.lionSelectionMenu(player2);
+    bool entryValid = false;
+    int entry = 0;
+
+    while (!entryValid) {
+        cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
+        cin >> entry;
+        if (entry == 1){
+            player1 = game.lionSelectionMenu(player1);
+            system("clear");
+            entryValid = true;
+            break;
+        } else {
+            system("clear");
+            cout << "That was an invalid entry." << endl;
+        }
+    }
+    entryValid = false;
+
+    while (!entryValid) {
+        cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
+        cin >> entry;
+        if (entry == 1){
+            player2 = game.lionSelectionMenu(player2);
+            system("clear");
+            entryValid = true;
+            break;
+        } else {
+            system("clear");
+            cout << "That was an invalid entry." << endl;
+        }
+    }
 
     trainOrCub1 = game.prideOrTrain(player1);
     player1.setChoice(trainOrCub1);
@@ -63,11 +95,10 @@ void startGame(){
     board.initializeBoard(trainOrCub1, trainOrCub2);
 
     while (game.getIsNotDone()) {
-        board.displayBoard();
         Game::GameState state;
-        
+
         cout << "\nPlayer " << (game.getCurrentTurn() % 2 + 1) << "'s Turn" << endl;
-        
+
         if(game.getCurrentTurn() % 2 == 0){
             state = game.rollOrMenuInput(player1, board);
             player1 = state.player;
@@ -77,12 +108,12 @@ void startGame(){
             player2 = state.player;
             board = state.board;
         }
-        
+
         // Only increment turn if no extra turn was granted
         if (!state.extraTurn) {
             game.setCurrentTurn(game.getCurrentTurn() + 1);
         }
-        
+
         // Check for game end
         if (board.getPlayerPosition(0) >= 51 || board.getPlayerPosition(1) >= 51) {
             game.setIsNotDone(false);
@@ -101,8 +132,13 @@ bool playerOneStarts(Player playerOne, Player playerTwo){
         cout << "That is an invalid entry, please enter either 1 or 2." << endl;
         return playerOneStarts(playerOne, playerTwo);
     } else if (choice == random) {
+        system("clear");
+        cout << playerOne.getPlayerName() << " you get to go first!" << endl;
+
         return true;
     }
+    system("clear");
+    cout << playerTwo.getPlayerName() << " you get to go first!" << endl;
 
     return false;
 }

@@ -23,11 +23,9 @@ void Game::removeSelectedCharacter(int index) {
 }
 //display each character their stats and their ascii image and then prompt the user
 Player Game::lionSelectionMenu(Player player) {
-    string name;
-    cout << "Enter your name" << endl;
-    cin >> name;
     int input;
     string line;
+    bool invalid = true;
     for (int i = 0; i < lions.size(); i++) {
         cout << "Option # " << i+1 << endl;
         cout << "ENTER OPTION NUMBER CORRESPONDING TO THE CHARACTER YOU WANT TO CHOOSE" << endl;
@@ -65,7 +63,17 @@ Player Game::lionSelectionMenu(Player player) {
 
     cout << "Enter the number you want as your lion." << endl;
     cin >> input;
-    player.setPlayerName(name);
+
+    //check valid input
+    while (invalid) {
+        if (input < 1 || input > lions.size()) {
+            cout << "That is an invalid entry, please select a lion." << endl;
+            cin >> input;
+        } else {
+            invalid = false;
+        }
+    }
+
     player.setLionName(lions[input-1].getLionName());
     player.setStamina(lions[input-1].getStamina());
     player.setAge(lions[input-1].getAge());
@@ -76,7 +84,6 @@ Player Game::lionSelectionMenu(Player player) {
     asciiLion.erase(asciiLion.begin() + (input - 1));
 
     return player;
-    // removeSelectedCharacter(input-1);
 }
 
 int Game::getCurrentTurn(){
@@ -166,15 +173,21 @@ void Game::displayGameStats(Player player) {
     //have them pick to the pride lands or to cub training, ture if pride lands false if cub training
 int Game::prideOrTrain(Player player) {
     int answer;
-    cout << "You have picked your character. Now, the game begins.\nDo you want to go to Cub Training to hone in on your skills, or are you confident enough to go staight to the Pride Lands?\n Pick Wisely!!";
-    cout << "Enter 0 if you would like to go to Cub Training first!\n";
-    cout << "Enter 1 if you would like to go to the Pride Lands first!";
+    cout << player.getPlayerName() << " you have picked your character. Now, the game begins." << endl;
+    cout << "Do you want to go to Cub Training to hone in on your " << endl;
+    cout << "skills, or are you confident enough to go staight to" << endl;
+    cout << "the Pride Lands?\n Pick Wisely!!" << endl;;
+    cout << "Enter 0 if you would like to go to Cub Training first!" << endl;
+    cout << "Enter 1 if you would like to go to the Pride Lands first!" << endl;
     cin >> answer;
     if (answer == 0) {
+        system("clear");
         return 0;
     } else if (answer == 1) {
+        system("clear");
         return 1;
     } else {
+        system("clear");
         std::cout << "You must enter a valid input\n";
         prideOrTrain(player);
     }
@@ -189,20 +202,20 @@ int Game::prideOrTrain(Player player) {
         string lowerInput;
         cout << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\nFor dice, type \"dice\"";
         cin >> input;
-        
+
         for(int i = 0; i < input.length(); i++) {
             lowerInput += tolower(input[i]);
         }
-        
+
         if (lowerInput == "dice") {
             int rollResults = roll();
             cout << "You rolled a " << rollResults << "!" << endl;
-            
+
             int playerIndex = (getCurrentTurn() % 2);
             player = board.movePlayer(playerIndex, rollResults);
-            
+
             board.displayBoard();
-            
+
             // Check if landed on blue tile and set flag in GameState
             if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
                 cout << "Extra turn granted!" << endl;
@@ -219,10 +232,10 @@ int Game::prideOrTrain(Player player) {
             cin >> stupid;
             return rollOrMenuInput(player, board);
         }
-        
+
         state.player = player;
         state.board = board;
-        
+
         return state;
     }
 //rolls a number between one and six
@@ -278,7 +291,7 @@ void Game::displayMenu(Player player) {
     cout << "5. Review your progress: Restart if you are not happy with decisons that YOU have made.\n";
     cout << "6. Review your progress: See your TOTAL Pride Points if the game ended right now. ";
     cin >> menu;
-    
+
     if (menu == 1) {
         displayAgeAndInfo(player);
     }
@@ -296,14 +309,14 @@ void Game::displayMenu(Player player) {
         // restart
     }
     else if (menu == 6) {
-        int strengthToPride = player.getPridePoints(); 
-        int wisdomToPride = player.getWisdom(); 
-        int staminaToPride = player.getStamina(); 
-        int total = strengthToPride + wisdomToPride + staminaToPride; 
-        total %= 100; 
-        int newPride = total * 1000; 
-        newPride += player.getPridePoints(); 
-        cout << "Your TOTAL Pride Points: " << newPride; 
+        int strengthToPride = player.getPridePoints();
+        int wisdomToPride = player.getWisdom();
+        int staminaToPride = player.getStamina();
+        int total = strengthToPride + wisdomToPride + staminaToPride;
+        total %= 100;
+        int newPride = total * 1000;
+        newPride += player.getPridePoints();
+        cout << "Your TOTAL Pride Points: " << newPride;
     }
     else {
         cout << "Invalid menu option.\n";
@@ -316,21 +329,19 @@ void Game::creatAsciiLion(){
     fstream file;
     string junk;
     file.open("asciiLion.txt");
-    
+
     string ascii;
-    
+
     if (file.fail()) {
         cout << "Error opening ascii file" << endl;
         return;
     }
-    
+
     for (int i = 0; i < lions.size(); i ++){
         getline(file, ascii, 'Z');
         getline(file, junk);
         asciiLion.push_back(ascii);
     }
-    
+
     file.close();
 }
-    
-    

@@ -1,6 +1,7 @@
+//Abey Saleh and Fred Zordgrager Group Project
 #ifndef BOARD_H
 #define BOARD_H
-#include "tile.h"
+#include "Tile.h"
 
 class Board
 {

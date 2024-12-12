@@ -1,9 +1,15 @@
-#include "tile.h"
+//Abey Saleh and Fred Zordgrager Group Project
+#include "Tile.h"
 #include "player.h"
+#include "board.h"
 #include <vector>
 #include <fstream>
 #include <cstdlib>
 #include <iostream>
+
+Tile::Tile(){
+    
+}
 
 //takes in the player and the tile color, based of the tile color it does different things
 Player Tile::getMessage(Player player, int player_index){
