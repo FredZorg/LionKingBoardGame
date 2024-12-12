@@ -306,6 +306,7 @@ Player Board::movePlayer(int player_index, int dist) {
     switch(currentColor) {
         case 'B': // Blue - Oasis
             cout << "You landed on a blue tile! You get another turn!" << endl;
+            players[player_index].addBlueCounter(players[player_index]);
             return isBlue(players[player_index]);
 
         case 'R': // Red - Graveyard
@@ -315,6 +316,9 @@ Player Board::movePlayer(int player_index, int dist) {
             players[player_index].addStrength(-100);
             players[player_index].addStamina(-100);
             _player_position[player_index] = max(1, _player_position[player_index] - 10);
+            
+            players[player_index].addRedCounter(players[player_index]);
+            
             return players[player_index];
 
         case 'P': // Pink - Enrichment

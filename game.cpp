@@ -219,9 +219,9 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
 
             int playerIndex = (getCurrentTurn() % 2);
             player = board.movePlayer(playerIndex, rollResults);
-            
+
             board.displayBoard();
-            
+
             // Check if player landed on a blue tile
             if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
                 cout << "Extra turn granted!" << endl;
@@ -272,44 +272,48 @@ int Game::roll() {
 }
 
 void Game::stupidSorting(Player player) {
-    vector <int> nums; 
-    int temp; 
-    nums.push_back(player.getBlueOccurrences()); 
-    nums.push_back(player.getPinkOccurrences()); 
-    nums.push_back(player.getBrownOccurrences()); 
-    nums.push_back(player.getPurpleOccurrences()); 
-    nums.push_back(player.getGreenOccurrences()); 
+    vector <int> nums;
+    int temp;
+    nums.push_back(player.getBlueOccurrences());
+    nums.push_back(player.getPinkOccurrences());
+    nums.push_back(player.getBrownOccurrences());
+    nums.push_back(player.getPurpleOccurrences());
+    nums.push_back(player.getGreenOccurrences());
+    nums.push_back(player.getRedOccurrences());
     for (int i = 0; i < nums.size()-1; i++) {
             for (int j = i+1; j < nums.size(); j++) {
                 if (nums[i] < nums[j]) {
-                    temp = nums[i]; 
-                    nums[i] = nums[j]; 
-                    nums[j] = temp; 
+                    temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
                 }
             }
     }
-    vector <string> fred; 
-        
+    vector <string> fred;
+
     for (int i = 0; i < nums.size(); i++) {
         if (nums[i] == player.getBlueOccurrences()) {
-            fred[i] = "blue"; 
+            fred[i] = "blue";
         }
         else if (nums[i] == player.getPinkOccurrences()) {
-            fred[i] = "pink"; 
+            fred[i] = "pink";
         }
         else if (nums[i] == player.getBrownOccurrences()) {
-            fred[i] = "brown"; 
+            fred[i] = "brown";
         }
         else if (nums[i] == player.getPurpleOccurrences()) {
-            fred[i] = "purple"; 
+            fred[i] = "purple";
         }
         else if (nums[i] == player.getGreenOccurrences()) {
-            fred[i] = "green"; 
+            fred[i] = "green";
+        }
+        else if (nums[i] == player.getRedOccurrences()) {
+            fred[i] = "red";
         }
     }
-    
+
     for (int i = 0; i < fred.size(); i++) {
-        cout << "You landed on the " << fred[i] << nums[i] << "times.\n"; 
+        cout << "You landed on the " << fred[i] << " tile " << nums[i] << " times.\n";
     }
 }
 

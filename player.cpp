@@ -24,6 +24,12 @@ Player::Player() {
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
     _advisorName = "E";
     _advisorAbility = "E";
+    blueCounter = 0;
+    pinkCounter = 0;
+    brownCounter = 0;
+    purpleCounter = 0;
+    greenCounter = 0;
+    redCounter = 0;
     _playerName = playerName;
     _lionName = name;
     _advisorAscii = advisorAscii;
@@ -51,6 +57,9 @@ Player::Player(string playerName, string name, int pride_points, int strength, i
 }
 
 // getters
+int Player::getRedOccurrences(){
+    return redCounter;
+}
 string Player :: getPlayerName() {
     return _playerName;
 }
@@ -179,4 +188,8 @@ void Player :: addPinkCounter(Player player) {
 }
 void Player :: addBlueCounter(Player player) {
     blueCounter++; 
+}
+
+void Player::addRedCounter(Player player){
+    redCounter++;
 }

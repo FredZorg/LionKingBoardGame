@@ -53,7 +53,7 @@ void startGame(){
         //select lions
         bool entryValid = false;
         int entry = 0;
-        
+
         while (!entryValid) {
             cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
@@ -67,9 +67,9 @@ void startGame(){
                 cout << "That was an invalid entry." << endl;
             }
         }
-    
+
         entryValid = false;
-    
+
         while (!entryValid) {
             cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
@@ -88,7 +88,7 @@ void startGame(){
         //select lions
         bool entryValid = false;
         int entry = 0;
-        
+
         while (!entryValid) {
             cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
@@ -102,9 +102,9 @@ void startGame(){
                 cout << "That was an invalid entry." << endl;
             }
         }
-    
+
         entryValid = false;
-    
+
         while (!entryValid) {
             cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
@@ -120,7 +120,7 @@ void startGame(){
         }
     }
 
-    
+
 
     trainOrCub1 = game.prideOrTrain(player1);
     if (trainOrCub1 == 0){
@@ -155,15 +155,16 @@ void startGame(){
 
     while (!player1.getGameIsDone() && !player2.getGameIsDone()) {
         Game::GameState state;
+        int index = game.getCurrentTurn() % 2;
 
-        if ((game.getCurrentTurn() % 2 + 1) == 0){
-            cout << "\nPlayer " << (player1.getPlayerName()) << "'s Turn" << endl;
+        if ((index) == 0){
+            cout << "\n" << (player1.getPlayerName()) << "'s Turn" << endl;
         } else {
-            cout << "\nPlayer " << (player2.getPlayerName()) << "'s Turn" << endl;
+            cout << "\n" << (player2.getPlayerName()) << "'s Turn" << endl;
         }
-        
 
-        if(game.getCurrentTurn() % 2 == 0){
+
+        if(index == 0){
             state = game.rollOrMenuInput(player1, board);
             player1 = state.player;
             board = state.board;
@@ -173,19 +174,54 @@ void startGame(){
             board = state.board;
         }
 
-        // Only increment turn if no extra turn was granted
-        if (!state.extraTurn) {
+        if (board.getTileColor(index, board.getPlayerPosition(index)) == 'B'){
+            //nothing 
+        } else {
             game.setCurrentTurn(game.getCurrentTurn() + 1);
         }
+        
 
         // Check for game end
-        if (board.getPlayerPosition(0) >= 51 || board.getPlayerPosition(1) >= 51) {
+        if (board.getPlayerPosition(0) > 51 || board.getPlayerPosition(1) > 51) {
             game.setIsNotDone(false);
         }
     }
+
+    cout << "The game is done!!!" << endl;
+    game.stupidSorting(player1);
+    cout << endl;
+    game.stupidSorting(player2);
     
-    cout << player1.getAdvisorName() << endl;
-    cout << player2.getAdvisorName() << endl;
+    int strengthToPride = player1.getPridePoints();
+    int wisdomToPride = player1.getWisdom();
+    int staminaToPride = player1.getStamina();
+    int total = strengthToPride + wisdomToPride + staminaToPride;
+    total /= 100;
+    int newPride1 = total * 1000;
+    newPride1 += player1.getPridePoints();
+    cout << player1.getPlayerName() << " TOTAL Pride Points: " << newPride1 << endl;
+    
+    strengthToPride = player2.getPridePoints();
+    wisdomToPride = player2.getWisdom();
+    staminaToPride = player2.getStamina();
+    total = strengthToPride + wisdomToPride + staminaToPride;
+    total /= 100;
+    int newPride2 = total * 1000;
+    newPride2 += player2.getPridePoints();
+    cout << player2.getPlayerName() << " TOTAL Pride Points: " << newPride2 << endl;
+    
+    cout << endl << "The winner is ";
+    
+    if (newPride2 > newPride1){
+        cout << player2.getPlayerName();
+    } else if (newPride1 > newPride2){
+        cout << player1.getPlayerName();
+    } else {
+        cout << "no one! It is a tie." << endl;
+    }
+    
+    cout << ", congradulations! Thanks for playing!" << endl;
+    
 }
 
 bool playerOneStarts(Player playerOne, Player playerTwo){
