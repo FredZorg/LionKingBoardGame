@@ -8,7 +8,7 @@
 #include <iostream>
 
 Tile::Tile(){
-    
+    getRiddles();
 }
 
 //takes in the player and the tile color, based of the tile color it does different things
@@ -48,7 +48,7 @@ Player Tile::isPurple(Player player){
 }
 
 //Normal tile, need to use random.txt for events, for some events an advisor will negate a negative task
-//cout each event and update each player thing 
+//cout each event and update each player thing
 Player Tile::isGreen(Player player) {
     fstream file_rand;
     file_rand.open("random_events.txt");
@@ -71,6 +71,7 @@ Player Tile::isGreen(Player player) {
     while (true) {
         int randy = rand() % 2 + 1;
         if (randy == 1) {
+            cout << "You land on a green tile and nothing happens." << endl;
             return player;
         }
 
@@ -99,7 +100,7 @@ Player Tile::isGreen(Player player) {
         else if (newAdvisor == 5) advisorName = "Sarafina";
 
         // If the player's choice doesn't match, restart the loop
-        if (newTrainOrPride != player.getChoice()) {   
+        if (newTrainOrPride != player.getChoice()) {
             continue;
         }
 

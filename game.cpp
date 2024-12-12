@@ -159,12 +159,14 @@ Player Game::advisorSelectionMenu (Player player) {
 
     //displays the specific characters character and its stats
 void Game::displayAgeAndInfo(Player player) {
-    cout << "\nHere are your players' name and age:\n" << endl;
+    system("clear");
+    cout << endl << "Here are your players' name and age:" << endl;
     cout << "Selected Lion Name: " << player.getLionName() << endl;
     cout << "Age: " << player.getAge() << endl;
 }
 void Game::displayGameStats(Player player) {
-    cout << "\nHere are your players' game stats:\n" << endl;
+    system("clear");
+    cout << endl << "Here are your players' game stats:" << endl;
     cout << "Selected Lion Name: " << player.getLionName() << endl;
     cout << "Strength: " << player.getStrength() << endl;
     cout << "Stamina: " << player.getStamina() << endl;
@@ -188,56 +190,56 @@ int Game::prideOrTrain(Player player) {
         return 1;
     } else {
         system("clear");
-        std::cout << "You must enter a valid input\n";
+        cout << "You must enter a valid input\n";
         prideOrTrain(player);
     }
     return 0;
 }
 
-    //choose whether to roll or go to the menu
-    Game::GameState Game::rollOrMenuInput(Player player, Board board) {
-        GameState state;
-        state.extraTurn = false;
-        string input;
-        string lowerInput;
-        cout << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\nFor dice, type \"dice\"";
-        cin >> input;
+//choose whether to roll or go to the menu
+Game::GameState Game::rollOrMenuInput(Player player, Board board) {
+    GameState state;
+    state.extraTurn = false;
+    string input;
+    string lowerInput;
+    cout << endl << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\nFor dice, type \"dice\"" << endl;
+    cin >> input;
 
-        for(int i = 0; i < input.length(); i++) {
-            lowerInput += tolower(input[i]);
-        }
-
-        if (lowerInput == "dice") {
-            int rollResults = roll();
-            cout << "You rolled a " << rollResults << "!" << endl;
-
-            int playerIndex = (getCurrentTurn() % 2);
-            player = board.movePlayer(playerIndex, rollResults);
-
-            board.displayBoard();
-
-            // Check if landed on blue tile and set flag in GameState
-            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
-                cout << "Extra turn granted!" << endl;
-                state.extraTurn = true;  // Add this flag to GameState struct
-            } else {
-                state.extraTurn = false;
-            }
-        } else if (lowerInput == "menu") {
-            displayMenu(player);
-            return rollOrMenuInput(player, board);
-        } else {
-            string stupid;
-            cout << "Invalid input - press enter to make a VALID decision";
-            cin >> stupid;
-            return rollOrMenuInput(player, board);
-        }
-
-        state.player = player;
-        state.board = board;
-
-        return state;
+    for(int i = 0; i < input.length(); i++) {
+        lowerInput += tolower(input[i]);
     }
+
+    if (lowerInput == "dice") {
+        int rollResults = roll();
+        cout << "You rolled a " << rollResults << "!" << endl;
+
+        int playerIndex = (getCurrentTurn() % 2);
+        player = board.movePlayer(playerIndex, rollResults);
+
+        board.displayBoard();
+
+        // Check if landed on blue tile and set flag in GameState
+        if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
+            cout << "Extra turn granted!" << endl;
+            state.extraTurn = true;  // Add this flag to GameState struct
+        } else {
+            state.extraTurn = false;
+        }
+    } else if (lowerInput == "menu") {
+        displayMenu(player, board);
+        return rollOrMenuInput(player, board);
+    } else {
+        string stupid;
+        cout << "Invalid input - press enter to make a VALID decision";
+        cin >> stupid;
+        return rollOrMenuInput(player, board);
+    }
+
+    state.player = player;
+    state.board = board;
+
+    return state;
+}
 //rolls a number between one and six
 // should call func that actualy moves pieces and change this to void
 int Game::roll() {
@@ -281,46 +283,48 @@ void Game::createLionsVector() {
     file_input.close(); // Close the file
 }
 
-void Game::displayMenu(Player player) {
+void Game::displayMenu(Player player, Board board) {
     int menu;
+
+    system("clear");
     cout << "This is your menu. Enter the number corresponding to select what you would like to do!\n";
     cout << "1. Review your player: Check on your health and age!\n";
     cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
     cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
     cout << "4. Review your Position: Check where you are on the board!\n";
-    cout << "5. Review your progress: Restart if you are not happy with decisons that YOU have made.\n";
-    cout << "6. Review your progress: See your TOTAL Pride Points if the game ended right now. ";
+    cout << "5. Review your progress: See your TOTAL Pride Points if the game ended right now. " << endl;
+    cout << "6. Go Back." << endl;
     cin >> menu;
+    system("clear");
 
     if (menu == 1) {
         displayAgeAndInfo(player);
-    }
-    else if (menu == 2) {
+    } else if (menu == 2) {
         displayGameStats(player);
-    }
-    else if (menu == 3) {
-        player.getAdvisorName();
-        player.getAdvisorAbility();
-    }
-    else if (menu == 4) {
-        // ?    displayBoard();
-    }
-    else if (menu == 5) {
-        // restart
-    }
-    else if (menu == 6) {
+    } else if (menu == 3) {
+        if (player.getAdvisorName() == "E"){
+            cout << "You do not have an advisor yet." << endl;
+        } else {
+            cout << "Your advisors name is " << player.getAdvisorName() << "." << endl;
+            cout << "Special Ability: " << endl << "- " << player.getAdvisorAbility() << endl;
+        }
+
+    } else if (menu == 4) {
+        board.displayBoard();
+    } else if (menu == 5) {
         int strengthToPride = player.getPridePoints();
         int wisdomToPride = player.getWisdom();
         int staminaToPride = player.getStamina();
         int total = strengthToPride + wisdomToPride + staminaToPride;
-        total %= 100;
+        total /= 100;
         int newPride = total * 1000;
         newPride += player.getPridePoints();
-        cout << "Your TOTAL Pride Points: " << newPride;
-    }
-    else {
+        cout << "Your TOTAL Pride Points: " << newPride << endl;
+    } else if (menu == 6){
+
+    } else {
         cout << "Invalid menu option.\n";
-        displayMenu(player);
+        displayMenu(player, board);
     }
 }
 

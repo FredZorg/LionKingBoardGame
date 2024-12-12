@@ -32,7 +32,7 @@ class Game {
         void displayGameStats(Player player);
         int prideOrTrain(Player player);
         GameState rollOrMenuInput(Player player, Board board);
-        void displayMenu(Player player);
+        void displayMenu(Player player, Board board);
         void createAdvisorVector();
         Player advisorSelectionMenu (Player player);
         bool getIsNotDone();
