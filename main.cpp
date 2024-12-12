@@ -156,7 +156,12 @@ void startGame(){
     while (!player1.getGameIsDone() && !player2.getGameIsDone()) {
         Game::GameState state;
 
-        cout << "\nPlayer " << (game.getCurrentTurn() % 2 + 1) << "'s Turn" << endl;
+        if ((game.getCurrentTurn() % 2 + 1) == 0){
+            cout << "\nPlayer " << (player1.getPlayerName()) << "'s Turn" << endl;
+        } else {
+            cout << "\nPlayer " << (player2.getPlayerName()) << "'s Turn" << endl;
+        }
+        
 
         if(game.getCurrentTurn() % 2 == 0){
             state = game.rollOrMenuInput(player1, board);
@@ -178,6 +183,9 @@ void startGame(){
             game.setIsNotDone(false);
         }
     }
+    
+    cout << player1.getAdvisorName() << endl;
+    cout << player2.getAdvisorName() << endl;
 }
 
 bool playerOneStarts(Player playerOne, Player playerTwo){

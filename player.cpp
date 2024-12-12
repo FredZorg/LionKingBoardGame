@@ -22,6 +22,8 @@ Player::Player() {
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
+    _advisorName = "E";
+    _advisorAbility = "E";
     _playerName = playerName;
     _lionName = name;
     _advisorAscii = advisorAscii;

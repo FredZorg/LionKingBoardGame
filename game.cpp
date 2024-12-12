@@ -117,7 +117,6 @@ void Game::setIsNotDone(bool thing){
 
 Player Game::advisorSelectionMenu (Player player) {
     cout << "What advisor do you want to pick" << endl;
-    int counter = 0;
     int input = 0;
 
     if (player.getAdvisorName() != "E"){
@@ -125,17 +124,18 @@ Player Game::advisorSelectionMenu (Player player) {
     }
 
     for (int i = 0; i < advisorNames.size(); i++){
-            cout << "(" << (i + 1) << ")" << advisorNames[i] << " - " << advisorAbilities[i] << endl;
-        }
+        cout << "(" << (i + 1) << ")" << advisorNames[i] << " - " << advisorAbilities[i] << endl;
+    }
     cin >> input;
 
     if ((input == 0) && (player.getAdvisorName() != "E")){
         return player;
     }
 
-    if ((input <= 0) || (input > counter)){
+    if ((input <= 0) || (input > advisorNames.size())){
         cout << "That is an invalid input, please select again." << endl;
-        advisorSelectionMenu(player);
+        player = advisorSelectionMenu(player);
+        return player;
     }
 
     if (player.getAdvisorName() == "E"){
@@ -153,7 +153,7 @@ Player Game::advisorSelectionMenu (Player player) {
         advisorNames.push_back(tempN);
         advisorAbilities.push_back(tempA);
     }
-
+    system("clear");
     return player;
 }
 
@@ -199,7 +199,7 @@ int Game::prideOrTrain(Player player) {
 //choose whether to roll or go to the menu
 Game::GameState Game::rollOrMenuInput(Player player, Board board) {
     GameState state;
-    state.extraTurn = false;
+    state.extraTurn = true;
     string input;
     string lowerInput;
     cout << endl << "Would you like to roll your dice, or go to the Menu?\nFor menu, type: \"menu\"\nFor dice, type \"dice\"" << endl;
@@ -223,26 +223,28 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
             cout << "Extra turn granted!" << endl;
             state.extraTurn = true;  // Add this flag to GameState struct
+            return rollOrMenuInput(player, board);
         } else {
             state.extraTurn = false;
         }
-        
+
         if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
             advisorSelectionMenu(player);
-        } 
-        
+        }
+
         bool entryValid = false;
         int entry;
-        
+
         while (!entryValid) {
             cout << player.getPlayerName() << " type 1 if you are ready to pass your turn on to the next player." << endl;
             cin >> entry;
             if (entry == 1){
                 entryValid = true;
+                system("clear");
             } else {
                 cout << "That is an invalid input please input 1." << endl;
             }
-        }    
+        }
     } else if (lowerInput == "menu") {
         displayMenu(player, board);
         return rollOrMenuInput(player, board);

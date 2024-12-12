@@ -27,13 +27,17 @@ Player Tile::getMessage(Player player, int player_index){
 Player Tile::isPurple(Player player){
     string input;
     int random = rand() % riddlesAndAnswers[0].size();
+    string answer = riddlesAndAnswers[1][random];
 
     cout << "You stumble across a scruffy old man. He asks you this riddle:" << endl;
     cout << riddlesAndAnswers[0][random] << endl;
-    cin >> input;
+    cout << "Input your asnwer" << endl;
+    cin.ignore(10000, '\n'); 
+    getline(cin, input);
+    cout << "The answer is " << answer << endl;
 
     //get a random riddle and check their input
-    if (riddlesAndAnswers[1][random] == input) {
+    if (answer == input) {
         cout << "He transforms into a wizard and applauds you for the correct answer. You are surrounded by a gust of wind and he disappears." << endl;
         cout << "You feel stronger:" << endl;
         cout << "500 Wisdom" << endl << "500 Strenght" << endl << "500 Stamina" << endl;
@@ -42,6 +46,7 @@ Player Tile::isPurple(Player player){
         player.addStamina(500);
     } else {
         cout << "He walks away looking disapointed and nothing happens." << endl;
+        cout << input << ", the correct answer was " << riddlesAndAnswers[1][random] << endl;
     }
 
     return player;
