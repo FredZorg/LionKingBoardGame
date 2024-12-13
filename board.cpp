@@ -280,6 +280,13 @@ char Board::getTileColor(int player_index, int position) const {
     return _tiles[player_index][position].color;
 }
 
+// board.cpp
+void Board::setPlayer(int index, Player player) {
+    if (index >= 0 && index < 2) {
+        players[index] = player;
+    }
+}
+
 Player Board::movePlayer(int player_index, int dist) {
     // Store original position for brown tile
     int originalPosition = _player_position[player_index];

@@ -220,20 +220,12 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
             int playerIndex = (getCurrentTurn() % 2);
             player = board.movePlayer(playerIndex, rollResults);
 
-            board.displayBoard();
-
-            // Check if player landed on a blue tile
-            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'B') {
-                cout << "Extra turn granted!" << endl;
-                extraTurn = true; // Allow another roll
-            } else {
-                extraTurn = false; // End the extra turn loop
-            }
-
             // Handle special case for pink tile (advisor selection)
             if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
                 player = advisorSelectionMenu(player);
             }
+            
+            board.displayBoard();
         }
 
         bool entryValid = false;

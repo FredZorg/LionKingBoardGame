@@ -167,19 +167,21 @@ void startGame(){
         if(index == 0){
             state = game.rollOrMenuInput(player1, board);
             player1 = state.player;
+            board.setPlayer(0, player1); 
             board = state.board;
         } else {
             state = game.rollOrMenuInput(player2, board);
             player2 = state.player;
+            board.setPlayer(1, player2); 
             board = state.board;
         }
 
         if (board.getTileColor(index, board.getPlayerPosition(index)) == 'B'){
-            //nothing 
+            //nothing
         } else {
             game.setCurrentTurn(game.getCurrentTurn() + 1);
         }
-        
+
 
         // Check for game end
         if (board.getPlayerPosition(0) > 51 || board.getPlayerPosition(1) > 51) {
@@ -191,7 +193,7 @@ void startGame(){
     game.stupidSorting(player1);
     cout << endl;
     game.stupidSorting(player2);
-    
+
     int strengthToPride = player1.getPridePoints();
     int wisdomToPride = player1.getWisdom();
     int staminaToPride = player1.getStamina();
@@ -200,7 +202,7 @@ void startGame(){
     int newPride1 = total * 1000;
     newPride1 += player1.getPridePoints();
     cout << player1.getPlayerName() << " TOTAL Pride Points: " << newPride1 << endl;
-    
+
     strengthToPride = player2.getPridePoints();
     wisdomToPride = player2.getWisdom();
     staminaToPride = player2.getStamina();
@@ -209,9 +211,9 @@ void startGame(){
     int newPride2 = total * 1000;
     newPride2 += player2.getPridePoints();
     cout << player2.getPlayerName() << " TOTAL Pride Points: " << newPride2 << endl;
-    
+
     cout << endl << "The winner is ";
-    
+
     if (newPride2 > newPride1){
         cout << player2.getPlayerName();
     } else if (newPride1 > newPride2){
@@ -219,9 +221,9 @@ void startGame(){
     } else {
         cout << "no one! It is a tie." << endl;
     }
-    
+
     cout << ", congradulations! Thanks for playing!" << endl;
-    
+
 }
 
 bool playerOneStarts(Player playerOne, Player playerTwo){

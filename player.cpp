@@ -19,11 +19,13 @@ Player::Player() {
     _age = 0;
     _choice = 0;
     gameIsDone = false;
+    extraTurn = false;
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
     _advisorName = "E";
     _advisorAbility = "E";
+    extraTurn = false;
     blueCounter = 0;
     pinkCounter = 0;
     brownCounter = 0;

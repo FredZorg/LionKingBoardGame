@@ -15,7 +15,6 @@ class Game {
         struct GameState {
             Player player;
             Board board;
-            bool extraTurn = false;
         };
         
         Game(int start);

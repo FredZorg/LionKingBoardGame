@@ -8,7 +8,7 @@ class Player {
     private:
         std::string _playerName, _lionName, _advisorName, _advisorAbility, _lionAscii, _advisorAscii;
         int _strength, _stamina, _wisdom, _pride_points, _age, _choice, blueCounter, pinkCounter, brownCounter, purpleCounter, greenCounter, redCounter;
-        bool gameIsDone;
+        bool gameIsDone, extraTurn;
 
     public:
         Player();
