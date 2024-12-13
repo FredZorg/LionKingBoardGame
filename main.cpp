@@ -8,6 +8,7 @@
 using namespace std;
 
 void startGame();
+void decideWinner(Player player1, Player player2);
 bool playerOneStarts(Player playerOne, Player playerTwo);
 
 int main(){
@@ -202,41 +203,47 @@ void startGame(){
             game.setIsNotDone(false);
         }
     }
-
-    cout << "The game is done!!!" << endl;
+    
+    decideWinner(player1, player2); 
     game.stupidSorting(player1);
     cout << endl;
     game.stupidSorting(player2);
+    cout << endl;
 
-    int strengthToPride = player1.getPridePoints();
-    int wisdomToPride = player1.getWisdom();
-    int staminaToPride = player1.getStamina();
-    int total = strengthToPride + wisdomToPride + staminaToPride;
-    total /= 100;
-    int newPride1 = total * 1000;
-    newPride1 += player1.getPridePoints();
-    cout << player1.getPlayerName() << " TOTAL Pride Points: " << newPride1 << endl;
+    // cout << "The game is done!!!" << endl;
+    // game.stupidSorting(player1);
+    // cout << endl;
+    // game.stupidSorting(player2);
 
-    strengthToPride = player2.getPridePoints();
-    wisdomToPride = player2.getWisdom();
-    staminaToPride = player2.getStamina();
-    total = strengthToPride + wisdomToPride + staminaToPride;
-    total /= 100;
-    int newPride2 = total * 1000;
-    newPride2 += player2.getPridePoints();
-    cout << player2.getPlayerName() << " TOTAL Pride Points: " << newPride2 << endl;
+    // int strengthToPride = player1.getPridePoints();
+    // int wisdomToPride = player1.getWisdom();
+    // int staminaToPride = player1.getStamina();
+    // int total = strengthToPride + wisdomToPride + staminaToPride;
+    // total /= 100;
+    // int newPride1 = total * 1000;
+    // newPride1 += player1.getPridePoints();
+    // cout << player1.getPlayerName() << " TOTAL Pride Points: " << newPride1 << endl;
 
-    cout << endl << "The winner is ";
+    // strengthToPride = player2.getPridePoints();
+    // wisdomToPride = player2.getWisdom();
+    // staminaToPride = player2.getStamina();
+    // total = strengthToPride + wisdomToPride + staminaToPride;
+    // total /= 100;
+    // int newPride2 = total * 1000;
+    // newPride2 += player2.getPridePoints();
+    // cout << player2.getPlayerName() << " TOTAL Pride Points: " << newPride2 << endl;
 
-    if (newPride2 > newPride1){
-        cout << player2.getPlayerName();
-    } else if (newPride1 > newPride2){
-        cout << player1.getPlayerName();
-    } else {
-        cout << "no one! It is a tie." << endl;
-    }
+    // cout << endl << "The winner is ";
 
-    cout << ", congradulations! Thanks for playing!" << endl;
+    // if (newPride2 > newPride1){
+    //     cout << player2.getPlayerName();
+    // } else if (newPride1 > newPride2){
+    //     cout << player1.getPlayerName();
+    // } else {
+    //     cout << "no one! It is a tie." << endl;
+    // }
+
+    // cout << ", congradulations! Thanks for playing!" << endl;
 
 }
 
@@ -297,4 +304,5 @@ void decideWinner(Player player1, Player player2) {
     else {
         cout << "Wow. You guys have both demonstarted you are capable of being the ALPHA. \nEnjoy sharing the throne.";
     }
+
 }
