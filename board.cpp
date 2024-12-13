@@ -314,7 +314,9 @@ Player Board::movePlayer(int player_index, int dist) {
         case 'B': // Blue - Oasis
             cout << "You landed on a blue tile! You get another turn!" << endl;
             players[player_index].addBlueCounter(players[player_index]);
-            return isBlue(players[player_index]);
+            players[player_index] = isBlue(players[player_index]);
+            players[player_index].setExtraTurn(true);
+            return players[player_index];
 
         case 'R': // Red - Graveyard
             cout << "Uh-oh, you've stumbled into the Graveyard!" << endl;
@@ -323,9 +325,7 @@ Player Board::movePlayer(int player_index, int dist) {
             players[player_index].addStrength(-100);
             players[player_index].addStamina(-100);
             _player_position[player_index] = max(1, _player_position[player_index] - 10);
-            
             players[player_index].addRedCounter(players[player_index]);
-            
             return players[player_index];
 
         case 'P': // Pink - Enrichment
@@ -359,8 +359,8 @@ Player Board::movePlayer(int player_index, int dist) {
 
         case 'U': // Purple - Riddle
         case 'G': // Green - Random Event
-            return _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
-
+            players[player_index] = _tiles[player_index][_player_position[player_index]].getMessage(players[player_index], player_index);
+            return players[player_index];
         default: // Grey, Orange, or other
             return players[player_index];
     }

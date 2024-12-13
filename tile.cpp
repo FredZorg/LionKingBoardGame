@@ -10,17 +10,17 @@
 Tile::Tile(){
     getRiddles();
 }
-Player Tile :: specialTile(Player player) {
-    if (player.getChoice() == 0) {
-        isCub(player); 
-    }
-    else if (player.getChoice() == 1) {
-        isPride(player); 
-    }
-    else {
-        return player; 
-    }
-}
+// Player Tile :: specialTile(Player player) {
+//     if (player.getChoice() == 0) {
+//         isCub(player); 
+//     }
+//     else if (player.getChoice() == 1) {
+//         isPride(player); 
+//     }
+//     else {
+//         return player; 
+//     }
+// }
 
 //takes in the player and the tile color, based of the tile color it does different things
 Player Tile::getMessage(Player player, int player_index){
@@ -34,16 +34,16 @@ Player Tile::getMessage(Player player, int player_index){
     }
     return player;
 }
-Player Tile :: isCub(Player player) {
-    cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 1,000 pride points"; 
-    player.addPridePoints(1000); 
-}
-Player Tile :: isPride(Player player) {
-    cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 250 stamina, 250 wisdom, and 250 strength"; 
-    player.addStamina(250);
-    player.addStrength(250); 
-    player.addWisdom(250); 
-}
+// Player Tile :: isCub(Player player) {
+//     cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 1,000 pride points"; 
+//     player.addPridePoints(1000); 
+// }
+// Player Tile :: isPride(Player player) {
+//     cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 250 stamina, 250 wisdom, and 250 strength"; 
+//     player.addStamina(250);
+//     player.addStrength(250); 
+//     player.addWisdom(250); 
+// }
 
 Player Tile::isPurple(Player player){
     string input;
@@ -58,11 +58,10 @@ Player Tile::isPurple(Player player){
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
     getline(cin, input);
     //get a random riddle and check their input
-    cout << answer.compare(input) << endl;
-    if (answer.compare(input) == 0) { // why are we comparing a string to an int
+    if (answer.compare(input) == 1) { // why are we comparing a string to an int
         cout << "He transforms into a wizard and applauds you for the correct answer. You are surrounded by a gust of wind and he disappears." << endl;
         cout << "You feel stronger:" << endl;
-        cout << "500 Wisdom" << endl << "500 Strength" << endl << "500 Stamina" << endl;
+        cout << "+500 Wisdom" << endl << "+500 Strength" << endl << "+500 Stamina" << endl;
         player.addWisdom(500);
         player.addStrength(500);
         player.addStamina(500);

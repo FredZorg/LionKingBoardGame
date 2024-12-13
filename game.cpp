@@ -25,7 +25,6 @@ void Game::removeSelectedCharacter(int index) {
 Player Game::lionSelectionMenu(Player player) {
     int input;
     string line;
-    bool invalid = true;
     for (int i = 0; i < lions.size(); i++) {
         cout << "Option # " << i+1 << endl;
         cout << "ENTER OPTION NUMBER CORRESPONDING TO THE CHARACTER YOU WANT TO CHOOSE" << endl;
@@ -61,17 +60,21 @@ Player Game::lionSelectionMenu(Player player) {
         }
     }
 
-    cout << "Enter the number you want as your lion." << endl;
-    cin >> input;
+    bool entryValid = false;
 
-    //check valid input
-    while (invalid) {
-        if (input < 1 || input > lions.size()) {
-            cout << "That is an invalid entry, please select a lion." << endl;
-            cin >> input;
-        } else {
-            invalid = false;
-        }
+    while (!entryValid) {
+        cout << "Enter the number you want as your lion." << endl;
+        cin >> input;
+        if (cin.fail()) { // Check if the input is invalid
+               cout << "That is an invalid input. Please select a Lion;" << endl;
+               cin.clear(); // Clear the error flag
+               cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+           } else if (input < 1 || input > lions.size()) {
+               cout << "That is an invalid entry, please select a lion." << endl;
+               cin >> input;
+           } else {
+               entryValid = true;
+           }
     }
 
     player.setLionName(lions[input-1].getLionName());
@@ -83,6 +86,7 @@ Player Game::lionSelectionMenu(Player player) {
     lions.erase(lions.begin() + (input - 1));
     asciiLion.erase(asciiLion.begin() + (input - 1));
 
+    system("clear");
     return player;
 }
 
@@ -116,8 +120,10 @@ void Game::setIsNotDone(bool thing){
 }
 
 Player Game::advisorSelectionMenu (Player player) {
+    system("clear");
     cout << "What advisor do you want to pick" << endl;
     int input = 0;
+    bool entryValid = false;
 
     if (player.getAdvisorName() != "E"){
         cout << "(0)" << " - Keep current advisor" << endl;
@@ -132,10 +138,18 @@ Player Game::advisorSelectionMenu (Player player) {
         return player;
     }
 
-    if ((input <= 0) || (input > advisorNames.size())){
-        cout << "That is an invalid input, please select again." << endl;
-        player = advisorSelectionMenu(player);
-        return player;
+    while (!entryValid) {
+        if (cin.fail()) { // Check if the input is invalid
+               cout << "That is an invalid input. Please input 1." << endl;
+               cin.clear(); // Clear the error flag
+               cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+           } else if ((input <= 0) || (input > advisorNames.size())) {
+               system("clear");
+               player = advisorSelectionMenu(player);
+               return player;
+           } else {
+               entryValid = true;
+           }
     }
 
     if (player.getAdvisorName() == "E"){
@@ -152,6 +166,10 @@ Player Game::advisorSelectionMenu (Player player) {
         advisorAbilities.erase(advisorAbilities.begin() + (input - 1));
         advisorNames.push_back(tempN);
         advisorAbilities.push_back(tempA);
+        for (int i = 0; i < advisorNames.size(); i++){
+            cout << "(" << (i + 1) << ")" << advisorNames[i] << " - " << advisorAbilities[i] << endl;
+        }
+
     }
     system("clear");
     return player;
@@ -199,7 +217,6 @@ int Game::prideOrTrain(Player player) {
 //choose whether to roll or go to the menu
 Game::GameState Game::rollOrMenuInput(Player player, Board board) {
     GameState state;
-    state.extraTurn = false;
     string input;
     string lowerInput;
 
@@ -211,35 +228,41 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
     }
 
     if (lowerInput == "dice") {
-        bool extraTurn = true; // NEW: Track if the player gets another roll
-        while (extraTurn) {
-            int rollResults = roll();
-            system("clear");
+        int rollResults = roll();
+        system("clear");
+        cout << "You rolled a " << rollResults << "!" << endl;
+
+        int playerIndex = (getCurrentTurn() % 2);
+        player = board.movePlayer(playerIndex, rollResults);
+
+        // Handle special case for pink tile (advisor selection)
+        if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
+            player = advisorSelectionMenu(player);
+        } else if (player.getExtraTurn()) {
+            rollResults = roll();
             cout << "You rolled a " << rollResults << "!" << endl;
-
-            int playerIndex = (getCurrentTurn() % 2);
             player = board.movePlayer(playerIndex, rollResults);
-
-            // Handle special case for pink tile (advisor selection)
-            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
-                player = advisorSelectionMenu(player);
-            }
-            
-            board.displayBoard();
+            player.setExtraTurn(false);
         }
+
+        board.displayBoard();
 
         bool entryValid = false;
         int entry;
 
         while (!entryValid) {
-            cout << player.getPlayerName() << " type 1 if you are ready to pass your turn on to the next player." << endl;
+            cout << player.getPlayerName() << " input 1 if you are ready to pass your turn on to the next player." << endl;
             cin >> entry;
-            if (entry == 1) {
-                entryValid = true;
-                system("clear");
-            } else {
-                cout << "That is an invalid input please input 1." << endl;
-            }
+            if (cin.fail()) { // Check if the input is invalid
+                   cout << "That is an invalid input. Please input 1." << endl;
+                   cin.clear(); // Clear the error flag
+                   cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+               } else if (entry == 1) {
+                   entryValid = true;
+                   system("clear");
+               } else {
+                   cout << "That is an invalid input. Please input 1." << endl;
+               }
         }
     } else if (lowerInput == "menu") {
         displayMenu(player, board);

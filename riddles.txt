@@ -6,7 +6,7 @@ I can hold many values, but I’m defined with a single keyword. What am I? (sin
 I’m a class that hides its data, but exposes its behavior. What am I? (single word, lowercase)|object
 I am the first number of an array index in C++. What am I? (integer)|0
 I am the number of bits in a byte. What am I? (integer)|8
-I contain instructions but no emotions. When you debug me, I feel no pain. What am I? (single word, lowercase)|code
+I contain instructions but no emotions. When you debug me, I feel no paiFn. What am I? (single word, lowercase)|code
 I’m a variable, but I don’t change my value. What am I? (single word, lowercase)|constant
 I’m overloaded but not stressed. What am I? (single word, lowercase)|operator
 I take input, process it, and give output, but I’m not human. What am I? (single word, lowercase)|program

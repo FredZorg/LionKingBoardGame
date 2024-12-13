@@ -27,7 +27,7 @@ void startGame(){
     int trainOrCub1;
     int trainOrCub2;
 
-    board.addPlayers(player1, player2);
+    system("clear");
 
     //introduction
     cout << "Welcome to Ruler of the Pride! Your goal is to " << endl;
@@ -57,15 +57,17 @@ void startGame(){
         while (!entryValid) {
             cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
-            if (entry == 1){
-                player1 = game.lionSelectionMenu(player1);
-                system("clear");
-                entryValid = true;
-                break;
-            } else {
-                system("clear");
-                cout << "That was an invalid entry." << endl;
-            }
+            if (cin.fail()) { // Check if the input is invalid
+                   cout << "That is an invalid input. Please input 1." << endl;
+                   cin.clear(); // Clear the error flag
+                   cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+               } else if (entry == 1) {
+                   entryValid = true;
+                   game.lionSelectionMenu(player1);
+                   system("clear");
+               } else {
+                   cout << "That is an invalid input. Please input 1." << endl;
+               }
         }
 
         entryValid = false;
@@ -73,15 +75,17 @@ void startGame(){
         while (!entryValid) {
             cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
-            if (entry == 1){
-                player2 = game.lionSelectionMenu(player2);
-                system("clear");
-                entryValid = true;
-                break;
-            } else {
-                system("clear");
-                cout << "That was an invalid entry." << endl;
-            }
+            if (cin.fail()) { // Check if the input is invalid
+                   cout << "That is an invalid input. Please input 1." << endl;
+                   cin.clear(); // Clear the error flag
+                   cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+               } else if (entry == 1) {
+                   entryValid = true;
+                   system("clear");
+                   game.lionSelectionMenu(player2);
+               } else {
+                   cout << "That is an invalid input. Please input 1." << endl;
+               }
         }
     } else {
         game.setCurrentTurn(1);
@@ -92,15 +96,17 @@ void startGame(){
         while (!entryValid) {
             cout << player2.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
-            if (entry == 1){
-                player2 = game.lionSelectionMenu(player2);
-                system("clear");
-                entryValid = true;
-                break;
-            } else {
-                system("clear");
-                cout << "That was an invalid entry." << endl;
-            }
+            if (cin.fail()) { // Check if the input is invalid
+                   cout << "That is an invalid input. Please input 1." << endl;
+                   cin.clear(); // Clear the error flag
+                   cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+               } else if (entry == 1) {
+                   entryValid = true;
+                   game.lionSelectionMenu(player2);
+                   system("clear");
+               } else {
+                   cout << "That is an invalid input. Please input 1." << endl;
+               }
         }
 
         entryValid = false;
@@ -108,15 +114,17 @@ void startGame(){
         while (!entryValid) {
             cout << player1.getPlayerName() << " type 1 if you are ready to pick your lion." << endl;
             cin >> entry;
-            if (entry == 1){
-                player1 = game.lionSelectionMenu(player1);
-                system("clear");
-                entryValid = true;
-                break;
-            } else {
-                system("clear");
-                cout << "That was an invalid entry." << endl;
-            }
+            if (cin.fail()) { // Check if the input is invalid
+                   cout << "That is an invalid input. Please input 1." << endl;
+                   cin.clear(); // Clear the error flag
+                   cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+               } else if (entry == 1) {
+                   entryValid = true;
+                   game.lionSelectionMenu(player1);
+                   system("clear");
+               } else {
+                   cout << "That is an invalid input. Please input 1." << endl;
+               }
         }
     }
 
@@ -153,6 +161,7 @@ void startGame(){
 
     board.initializeBoard(trainOrCub1, trainOrCub2);
 
+    board.addPlayers(player1, player2);
     while (!player1.getGameIsDone() && !player2.getGameIsDone()) {
         Game::GameState state;
         int index = game.getCurrentTurn() % 2;
@@ -167,20 +176,17 @@ void startGame(){
         if(index == 0){
             state = game.rollOrMenuInput(player1, board);
             player1 = state.player;
-            board.setPlayer(0, player1); 
+            board.setPlayer(0, player1);
             board = state.board;
         } else {
             state = game.rollOrMenuInput(player2, board);
             player2 = state.player;
-            board.setPlayer(1, player2); 
+            board.setPlayer(1, player2);
             board = state.board;
         }
 
-        if (board.getTileColor(index, board.getPlayerPosition(index)) == 'B'){
-            //nothing
-        } else {
-            game.setCurrentTurn(game.getCurrentTurn() + 1);
-        }
+        game.setCurrentTurn(game.getCurrentTurn() + 1);
+
 
 
         // Check for game end
@@ -190,9 +196,9 @@ void startGame(){
     }
 
     cout << "The game is done!!!" << endl;
-    game.stupidSorting(player1);
-    cout << endl;
-    game.stupidSorting(player2);
+    // game.stupidSorting(player1);
+    // cout << endl;
+    // game.stupidSorting(player2);
 
     int strengthToPride = player1.getPridePoints();
     int wisdomToPride = player1.getWisdom();
@@ -229,21 +235,29 @@ void startGame(){
 bool playerOneStarts(Player playerOne, Player playerTwo){
     int random = rand() % 2 + 1;
     int choice = 0;
+    bool entryValid = false;
 
-    cout << "What is your choice?" << endl;
-    cin >> choice;
-
-    if ((choice != 1) && (choice != 2)){
-        cout << "That is an invalid entry, please enter either 1 or 2." << endl;
-        return playerOneStarts(playerOne, playerTwo);
-    } else if (choice == random) {
-        system("clear");
-        cout << playerOne.getPlayerName() << " you get to go first!" << endl;
-
-        return true;
+    while (!entryValid) {
+        cout << "What is your choice?" << endl;
+        cin >> choice;
+        if (cin.fail()) { // Check if the input is invalid
+               cout << "That is an invalid input. Please input 1." << endl;
+               cin.clear(); // Clear the error flag
+               cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+        } else if ((choice != 1) && (choice != 2)) {
+            system("clear");
+            cout << "That is an invalid entry, please enter either 1 or 2." << endl;
+            return playerOneStarts(playerOne, playerTwo);
+        } else if (choice == random) {
+            system("clear");
+            cout << playerOne.getPlayerName() << " you get to go first!" << endl;
+            return true;
+        } else {
+            system("clear");
+            cout << playerTwo.getPlayerName() << " you get to go first!" << endl;
+            return false;
+        }
     }
-    system("clear");
-    cout << playerTwo.getPlayerName() << " you get to go first!" << endl;
 
     return false;
 }

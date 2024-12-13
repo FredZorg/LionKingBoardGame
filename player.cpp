@@ -23,6 +23,7 @@ Player::Player() {
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
+    playerName = "E";
     _advisorName = "E";
     _advisorAbility = "E";
     extraTurn = false;
@@ -99,6 +100,9 @@ bool Player::getGameIsDone(){
     return gameIsDone;
 }
 
+void Player::setExtraTurn(bool thing){
+    extraTurn = thing;
+}
 
 // setters (should i error check?)
 void Player::setGameIsDone(bool duh){
@@ -162,36 +166,40 @@ void Player::addPridePoints(int pride) {
     _pride_points += pride;
 }
 int Player :: getBlueOccurrences() {
-    return blueCounter; 
+    return blueCounter;
 }
 int Player :: getPinkOccurrences() {
     return pinkCounter;
 }
 int Player :: getBrownOccurrences() {
-    return brownCounter; 
+    return brownCounter;
 }
 int Player :: getPurpleOccurrences() {
-    return purpleCounter; 
+    return purpleCounter;
 }
 int Player :: getGreenOccurrences() {
-    return greenCounter; 
+    return greenCounter;
 }
 void Player :: addGreenCounter(Player player) {
-    greenCounter++; 
+    greenCounter++;
 }
 void Player :: addPurpleCounter(Player player) {
-    purpleCounter++; 
+    purpleCounter++;
 }
 void Player :: addBrownCounter(Player player) {
-    brownCounter++; 
+    brownCounter++;
 }
 void Player :: addPinkCounter(Player player) {
-    pinkCounter++; 
+    pinkCounter++;
 }
 void Player :: addBlueCounter(Player player) {
-    blueCounter++; 
+    blueCounter++;
 }
 
 void Player::addRedCounter(Player player){
     redCounter++;
+}
+
+bool Player::getExtraTurn(){
+    return extraTurn;
 }

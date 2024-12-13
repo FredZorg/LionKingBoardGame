@@ -26,15 +26,17 @@ class Player {
         std::string getAdvisorAbility();
         int getChoice();
         bool getGameIsDone();
-        
-        int getBlueOccurrences(); 
-        int getPinkOccurrences(); 
-        int getBrownOccurrences(); 
-        int getPurpleOccurrences(); 
+
+        int getBlueOccurrences();
+        int getPinkOccurrences();
+        int getBrownOccurrences();
+        int getPurpleOccurrences();
         int getGreenOccurrences();
-        int getRedOccurrences(); 
+        int getRedOccurrences();
+        bool getExtraTurn();
 
         // setters
+        void setExtraTurn(bool thing);
         void setAge(int age);
         void setPlayerName(std::string playerName);
         void setLionName(std::string name);
@@ -52,11 +54,11 @@ class Player {
         void addStamina(int stamina);
         void addWisdom(int wisdom);
         void addPridePoints(int pride);
-        void addGreenCounter(Player player); 
-        void addPurpleCounter(Player player); 
-        void addBrownCounter(Player player); 
-        void addPinkCounter(Player player); 
-        void addBlueCounter(Player player); 
+        void addGreenCounter(Player player);
+        void addPurpleCounter(Player player);
+        void addBrownCounter(Player player);
+        void addPinkCounter(Player player);
+        void addBlueCounter(Player player);
         void addRedCounter(Player player);
 };
 
