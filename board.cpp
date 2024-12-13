@@ -307,6 +307,7 @@ void Board::setPlayer(int index, Player player) {
 
 Player Board::movePlayer(int player_index, int dist) {
     players[player_index].setExtraTurn(false);
+    players[player_index].setIsPink(false);
     // Store original position for brown tile
     int originalPosition = _player_position[player_index];
 

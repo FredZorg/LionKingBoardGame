@@ -258,10 +258,8 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
             }
         }
 
-        cout << board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) << endl;
-
         board.displayBoard();
-
+g
         bool entryValid = false;
         int entry;
 
@@ -345,9 +343,10 @@ void Game::stupidSorting(Player player) {
             fred[i] = "red";
         }
     }
-
+    ;
+    cout << player.getPlayerName() << ", landed on: \n";
     for (int i = 0; i < fred.size(); i++) {
-        cout << "You landed on the " << fred[i] << " tile " << nums[i] << " times.\n";
+         cout << "    The " << fred[i] << " tile " << nums[i] << " times.\n";
     }
 }
 
