@@ -5,6 +5,7 @@
 #include "game.h"
 #include "board.h"
 
+
 using namespace std;
 
 void startGame();
@@ -294,15 +295,23 @@ void decideWinner(Player player1, Player player2) {
     total2 /= 100;
     int newPride2 = total2 * 1000;
     newPride2 += player2.getPridePoints();
+    
+    if (player1.getStrength() > player2.getStrength()) {
+        newPride1 += 1000; 
+    }
+    else if (player1.getStrength() < player2.getStrength()) {
+        newPride2 += 1000; 
+    }
+
 
     if (newPride1 > newPride2) {
-        cout << "Congratulations " << player1.getPlayerName() << " you won!\nYou are now the ALPHA";
+        cout << "Congratulations " << player1.getPlayerName() << ", you ended with " << player1.getPridePoints() << " pride points.\nYou won! You are now the ALPHA\n";
     }
     else if (newPride1 < newPride2) {
-        cout << "Congratulations " << player2.getPlayerName() << " you won!\nYou are now the ALPHA";
+        cout << "Congratulations " << player2.getPlayerName() << ", you ended with " << player2.getPridePoints() << " pride points.\nYou won! You are now the ALPHA\n";
     }
     else {
-        cout << "Wow. You guys have both demonstarted you are capable of being the ALPHA. \nEnjoy sharing the throne.";
+        cout << "Wow. You guys have both demonstarted you are capable of being the ALPHA. Enjoy sharing the throne.\n";
     }
 
 }
