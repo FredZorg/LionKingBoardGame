@@ -63,7 +63,8 @@ void startGame(){
                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
                } else if (entry == 1) {
                    entryValid = true;
-                   game.lionSelectionMenu(player1);
+                   player1 = game.lionSelectionMenu(player1);
+                   board.updatePlayer(0, player1);
                    system("clear");
                } else {
                    cout << "That is an invalid input. Please input 1." << endl;
@@ -82,7 +83,8 @@ void startGame(){
                } else if (entry == 1) {
                    entryValid = true;
                    system("clear");
-                   game.lionSelectionMenu(player2);
+                   player2 = game.lionSelectionMenu(player2);
+                   board.updatePlayer(1, player2);
                } else {
                    cout << "That is an invalid input. Please input 1." << endl;
                }
@@ -102,7 +104,8 @@ void startGame(){
                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
                } else if (entry == 1) {
                    entryValid = true;
-                   game.lionSelectionMenu(player2);
+                   player2 = game.lionSelectionMenu(player2);
+                   board.updatePlayer(1, player2);
                    system("clear");
                } else {
                    cout << "That is an invalid input. Please input 1." << endl;
@@ -120,7 +123,8 @@ void startGame(){
                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
                } else if (entry == 1) {
                    entryValid = true;
-                   game.lionSelectionMenu(player1);
+                   player1 = game.lionSelectionMenu(player1);
+                   board.updatePlayer(0, player1);
                    system("clear");
                } else {
                    cout << "That is an invalid input. Please input 1." << endl;
@@ -161,7 +165,9 @@ void startGame(){
 
     board.initializeBoard(trainOrCub1, trainOrCub2);
 
-    board.addPlayers(player1, player2);
+    board.updatePlayer(0, player1);
+    board.updatePlayer(1, player2);
+
     while (!player1.getGameIsDone() && !player2.getGameIsDone()) {
         Game::GameState state;
         int index = game.getCurrentTurn() % 2;
@@ -174,11 +180,13 @@ void startGame(){
 
 
         if(index == 0){
+            player1.setExtraTurn(false);
             state = game.rollOrMenuInput(player1, board);
             player1 = state.player;
             board.setPlayer(0, player1);
             board = state.board;
         } else {
+            player2.setExtraTurn(false);
             state = game.rollOrMenuInput(player2, board);
             player2 = state.player;
             board.setPlayer(1, player2);
@@ -196,9 +204,9 @@ void startGame(){
     }
 
     cout << "The game is done!!!" << endl;
-    // game.stupidSorting(player1);
-    // cout << endl;
-    // game.stupidSorting(player2);
+    game.stupidSorting(player1);
+    cout << endl;
+    game.stupidSorting(player2);
 
     int strengthToPride = player1.getPridePoints();
     int wisdomToPride = player1.getWisdom();
@@ -260,4 +268,33 @@ bool playerOneStarts(Player playerOne, Player playerTwo){
     }
 
     return false;
+}
+
+//Need to actually call this in start
+void decideWinner(Player player1, Player player2) {
+    int strengthToPride1 = player1.getPridePoints();
+    int wisdomToPride1 = player1.getWisdom();
+    int staminaToPride1 = player1.getStamina();
+    int total1 = strengthToPride1 + wisdomToPride1 + staminaToPride1;
+    total1 /= 100;
+    int newPride1 = total1 * 1000;
+    newPride1 += player1.getPridePoints();
+
+    int strengthToPride2 = player2.getPridePoints();
+    int wisdomToPride2 = player2.getWisdom();
+    int staminaToPride2 = player2.getStamina();
+    int total2 = strengthToPride2 + wisdomToPride2 + staminaToPride2;
+    total2 /= 100;
+    int newPride2 = total2 * 1000;
+    newPride2 += player2.getPridePoints();
+
+    if (newPride1 > newPride2) {
+        cout << "Congratulations " << player1.getPlayerName() << " you won!\nYou are now the ALPHA";
+    }
+    else if (newPride1 < newPride2) {
+        cout << "Congratulations " << player2.getPlayerName() << " you won!\nYou are now the ALPHA";
+    }
+    else {
+        cout << "Wow. You guys have both demonstarted you are capable of being the ALPHA. \nEnjoy sharing the throne.";
+    }
 }

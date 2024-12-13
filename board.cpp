@@ -12,6 +12,8 @@
 #define GREY "\033[48;2;128;128;128m" /* Grey (128,128,128) */
 #define RESET "\033[0m"
 #define BLACK_BG "\033[48;2;0;0;0m"
+#define CYAN "\033[48;2;0;255;255m" /* Bright Aqua/Cyan */
+#define GOLD "\033[48;2;255;215;0m" /* Vibrant Gold */
 
 using namespace std;
 
@@ -67,7 +69,7 @@ void Board::initializeCubPath(int player_index) {
         } else {
             // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
             if (i <= GRAVEYARD_START){
-                int color_choice = rand() % 4;
+                int color_choice = rand() % 5;
                 switch (color_choice) {
                     case 0:
                         temp.color = 'B'; // Blue
@@ -81,6 +83,8 @@ void Board::initializeCubPath(int player_index) {
                     case 3:
                         temp.color = 'U'; // Purple
                         break;
+                    case 4:
+                        temp.color = 'Z'; //cyan
                 }
             } else if (i > GRAVEYARD_START && i <= OASIS_LIMIT) {
                 int color_choice = rand() % 5;
@@ -145,7 +149,7 @@ void Board::initializePridePath(int player_index) {
         } else {
             // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
             if (i < GRAVEYARD_START){
-                int color_choice = rand() % 5;
+                int color_choice = rand() % 6;
                 switch (color_choice) {
                     case 0:
                         temp.color = 'B'; // Blue
@@ -162,6 +166,8 @@ void Board::initializePridePath(int player_index) {
                     case 4:
                         temp.color = 'P'; // Pink
                         break;
+                    case 5:
+                        temp.color = 'Q'; //gold
                 }
             } else if (i >= GRAVEYARD_START && i <= OASIS_LIMIT) {
                 int color_choice = rand() % 5;
@@ -253,11 +259,22 @@ void Board::displayTile(int player_index, int pos) {
         color = ORANGE;
     } else if (_tiles[player_index][pos].color == 'Y') {
         color = GREY;
-    } if (player == true) {
+    } else if (_tiles[player_index][pos].color == 'Z') {
+        color = CYAN;
+    } else if (_tiles[player_index][pos].color == 'Q') {
+        color = GOLD;
+    }
+
+    if (player == true) {
         cout << color << "|" << (player_index + 1) << "|" << RESET;
     } else {
         cout << color << "| |" << RESET;
     }
+}
+
+//0 player1, 1 player2
+void Board::updatePlayer(int index, Player player){
+    players[index] = player;
 }
 
 void Board::displayTrack(int player_index) {
@@ -288,6 +305,7 @@ void Board::setPlayer(int index, Player player) {
 }
 
 Player Board::movePlayer(int player_index, int dist) {
+    players[player_index].setExtraTurn(false);
     // Store original position for brown tile
     int originalPosition = _player_position[player_index];
 
@@ -332,7 +350,8 @@ Player Board::movePlayer(int player_index, int dist) {
             cout << "Welcome to the land of enrichment!" << endl;
             cout << "+300 to all stats!" << endl;
             cout << "You also get to pick an advisor!!!" << endl;
-            
+            players[player_index].addPinkCounter(players[player_index]);
+
             while (!entryValid) {
                 cout << players[player_index].getPlayerName() << " type 1 if you are ready to pick an advisor." << endl;
                 cin >> entry;
@@ -342,7 +361,7 @@ Player Board::movePlayer(int player_index, int dist) {
                     cout << "That is an invalid input please input 1." << endl;
                 }
             }
-            
+
             players[player_index].addWisdom(300);
             players[player_index].addStrength(300);
             players[player_index].addStamina(300);
@@ -354,7 +373,20 @@ Player Board::movePlayer(int player_index, int dist) {
             players[player_index].addWisdom(-300);
             players[player_index].addStrength(-300);
             players[player_index].addStamina(-300);
+            players[player_index].addBrownCounter(players[player_index]);
             _player_position[player_index] = originalPosition;
+            return players[player_index];
+
+        case 'Q':
+            cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 1,000 pride points" << endl;
+            players[player_index].addPridePoints(1000);
+            return players[player_index];
+
+        case 'Z':
+            cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 250 stamina, 250 wisdom, and 250 strength" << endl;
+            players[player_index].addStamina(250);
+            players[player_index].addStrength(250);
+            players[player_index].addWisdom(250);
             return players[player_index];
 
         case 'U': // Purple - Riddle
@@ -371,4 +403,20 @@ int Board::getPlayerPosition(int player_index) const {
         return _player_position[player_index];
     }
     return -1;
+}
+
+void Board :: sameTile(Player player1, Player player2) {
+    if (getPlayerPosition(0) == getPlayerPosition(1)) {
+        if (player1.getWisdom() > player2.getWisdom()) {
+            cout << player2.getLionName() << ", you should have tried cared more about your wisdom.\n";
+            movePlayer(1, -1);
+        }
+        else if (player1.getWisdom() < player2.getWisdom()) {
+            cout << player1.getLionName() << ", you should have tried cared more about your wisdom.\n";
+            movePlayer(0, -1);
+        }
+        else {
+            cout << "You guys are equally as dumb, so you get to stay on the same tile!\n";
+        }
+    }
 }

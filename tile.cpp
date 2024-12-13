@@ -10,17 +10,6 @@
 Tile::Tile(){
     getRiddles();
 }
-// Player Tile :: specialTile(Player player) {
-//     if (player.getChoice() == 0) {
-//         isCub(player); 
-//     }
-//     else if (player.getChoice() == 1) {
-//         isPride(player); 
-//     }
-//     else {
-//         return player; 
-//     }
-// }
 
 //takes in the player and the tile color, based of the tile color it does different things
 Player Tile::getMessage(Player player, int player_index){
@@ -34,16 +23,7 @@ Player Tile::getMessage(Player player, int player_index){
     }
     return player;
 }
-// Player Tile :: isCub(Player player) {
-//     cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 1,000 pride points"; 
-//     player.addPridePoints(1000); 
-// }
-// Player Tile :: isPride(Player player) {
-//     cout << "Wow. You are one lucky duck. Or should I say lion. Enjoy 250 stamina, 250 wisdom, and 250 strength"; 
-//     player.addStamina(250);
-//     player.addStrength(250); 
-//     player.addWisdom(250); 
-// }
+
 
 Player Tile::isPurple(Player player){
     string input;

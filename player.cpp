@@ -20,6 +20,12 @@ Player::Player() {
     _choice = 0;
     gameIsDone = false;
     extraTurn = false;
+    blueCounter = 0;
+    pinkCounter = 0;
+    brownCounter = 0;
+    purpleCounter = 0;
+    greenCounter = 0;
+    redCounter = 0;
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {

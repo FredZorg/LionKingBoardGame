@@ -18,6 +18,8 @@ private:
     void initializeCubPath(int player_index);
     bool isPlayerOnTile(int player_index, int pos);
 public:
+    void updatePlayer(int index, Player player);
+    void sameTile(Player player1, Player player2); 
     void setPlayer(int index, Player player);
     char getTileColor(int player_index, int position) const;
     Player isBlue(Player player);

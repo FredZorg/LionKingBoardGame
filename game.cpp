@@ -71,7 +71,6 @@ Player Game::lionSelectionMenu(Player player) {
                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
            } else if (input < 1 || input > lions.size()) {
                cout << "That is an invalid entry, please select a lion." << endl;
-               cin >> input;
            } else {
                entryValid = true;
            }
@@ -200,7 +199,14 @@ int Game::prideOrTrain(Player player) {
     cout << "Enter 0 if you would like to go to Cub Training first!" << endl;
     cout << "Enter 1 if you would like to go to the Pride Lands first!" << endl;
     cin >> answer;
-    if (answer == 0) {
+    if (cin.fail()) {
+        // If input is not an integer, clear and discard the input
+        system("clear");
+        cout << "Invalid input. Please enter 0 or 1." << endl;
+        cin.clear(); // Clear the fail flag
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return prideOrTrain(player);
+    } else if (answer == 0) {
         system("clear");
         return 0;
     } else if (answer == 1) {
@@ -209,7 +215,7 @@ int Game::prideOrTrain(Player player) {
     } else {
         system("clear");
         cout << "You must enter a valid input\n";
-        prideOrTrain(player);
+        return prideOrTrain(player);
     }
     return 0;
 }
@@ -233,16 +239,21 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         cout << "You rolled a " << rollResults << "!" << endl;
 
         int playerIndex = (getCurrentTurn() % 2);
+        player.setExtraTurn(false);
         player = board.movePlayer(playerIndex, rollResults);
 
         // Handle special case for pink tile (advisor selection)
         if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
             player = advisorSelectionMenu(player);
+            board.updatePlayer(playerIndex, player);
         } else if (player.getExtraTurn()) {
-            rollResults = roll();
+            int rollResults2 = roll();
+            cout << endl << "Your second turn!" << endl << endl;
             cout << "You rolled a " << rollResults << "!" << endl;
-            player = board.movePlayer(playerIndex, rollResults);
-            player.setExtraTurn(false);
+            player = board.movePlayer(playerIndex +rollResults2, rollResults);
+            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
+                player = advisorSelectionMenu(player);
+            }
         }
 
         board.displayBoard();
@@ -269,8 +280,7 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         return rollOrMenuInput(player, board);
     } else {
         string stupid;
-        cout << "Invalid input - press enter to make a VALID decision";
-        cin >> stupid;
+        cout << "Invalid input - press enter to make a VALID decision" << endl;
         return rollOrMenuInput(player, board);
     }
 
@@ -304,7 +314,12 @@ void Game::stupidSorting(Player player) {
                 }
             }
     }
+
     vector <string> fred;
+
+    for (int i = 0; i < nums.size(); i++){
+        fred.push_back(" ");
+    }
 
     for (int i = 0; i < nums.size(); i++) {
         if (nums[i] == player.getBlueOccurrences()) {
@@ -370,7 +385,8 @@ void Game::createLionsVector() {
 
 void Game::displayMenu(Player player, Board board) {
     int menu;
-
+    bool entryValid = false;
+    
     system("clear");
     cout << "This is your menu. Enter the number corresponding to select what you would like to do!\n";
     cout << "1. Review your player: Check on your health and age!\n";
@@ -379,8 +395,31 @@ void Game::displayMenu(Player player, Board board) {
     cout << "4. Review your Position: Check where you are on the board!\n";
     cout << "5. Review your progress: See your TOTAL Pride Points if the game ended right now. " << endl;
     cout << "6. Go Back." << endl;
-    cin >> menu;
-    system("clear");
+   
+    while (!entryValid) {
+        system("clear");
+        cout << "Please enter a valid input." << endl;
+        cout << "This is your menu. Enter the number corresponding to select what you would like to do!\n";
+        cout << "1. Review your player: Check on your health and age!\n";
+        cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
+        cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
+        cout << "4. Review your Position: Check where you are on the board!\n";
+        cout << "5. Review your progress: See your TOTAL Pride Points if the game ended right now. " << endl;
+        cout << "6. Go Back." << endl;
+        cin >> menu;
+        cin.clear();
+        system("clear");
+        
+        if (cin.fail()) { // Check if the input is invalid
+               cout << "That is an invalid input. Please select a Lion;" << endl;
+               cin.clear(); // Clear the error flag
+               cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input from buffer
+           } else if ((menu <= 0) || (menu > 6)) {
+               cout << "That is an invalid entry, please select a lion." << endl;
+           } else {
+               entryValid = true;
+           }
+    }
 
     if (menu == 1) {
         displayAgeAndInfo(player);
