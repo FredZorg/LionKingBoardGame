@@ -259,7 +259,7 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
         }
 
         board.displayBoard();
-g
+
         bool entryValid = false;
         int entry;
 
