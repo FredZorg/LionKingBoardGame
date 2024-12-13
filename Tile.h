@@ -20,6 +20,7 @@ class Tile {
         Player getMessage(Player player, int player_index);
         Player isPurple(Player player);
         Player isGreen(Player player);
+        string getAdvisorNameForNumber(int number) const;
 };
 
 #endif

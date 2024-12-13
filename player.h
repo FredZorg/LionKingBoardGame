@@ -8,7 +8,7 @@ class Player {
     private:
         std::string _playerName, _lionName, _advisorName, _advisorAbility, _lionAscii, _advisorAscii;
         int _strength, _stamina, _wisdom, _pride_points, _age, _choice, blueCounter, pinkCounter, brownCounter, purpleCounter, greenCounter, redCounter;
-        bool gameIsDone, extraTurn;
+        bool gameIsDone, extraTurn, isPink;
 
     public:
         Player();
@@ -26,6 +26,7 @@ class Player {
         std::string getAdvisorAbility();
         int getChoice();
         bool getGameIsDone();
+        bool getIsPink();
 
         int getBlueOccurrences();
         int getPinkOccurrences();
@@ -36,6 +37,7 @@ class Player {
         bool getExtraTurn();
 
         // setters
+        void setIsPink(bool thing);
         void setExtraTurn(bool thing);
         void setAge(int age);
         void setPlayerName(std::string playerName);

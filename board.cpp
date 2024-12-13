@@ -285,6 +285,7 @@ void Board::displayTrack(int player_index) {
 }
 
 void Board::displayBoard() {
+    Tile temp;
     for (int i = 0; i < 2; i++) {
         displayTrack(i);
         if (i == 0) {
@@ -310,8 +311,8 @@ Player Board::movePlayer(int player_index, int dist) {
     int originalPosition = _player_position[player_index];
 
     // Increment player position
-    if (dist + _player_position[player_index] >= 52){
-        _player_position[player_index] = 52;
+    if (dist + _player_position[player_index] >= 51){
+        _player_position[player_index] = 51;
         players[player_index].setGameIsDone(true);
         return players[player_index];
     } else if (dist + _player_position[player_index] <= 1){
@@ -351,6 +352,7 @@ Player Board::movePlayer(int player_index, int dist) {
             cout << "+300 to all stats!" << endl;
             cout << "You also get to pick an advisor!!!" << endl;
             players[player_index].addPinkCounter(players[player_index]);
+            players[player_index].setIsPink(true);
 
             while (!entryValid) {
                 cout << players[player_index].getPlayerName() << " type 1 if you are ready to pick an advisor." << endl;

@@ -240,21 +240,25 @@ Game::GameState Game::rollOrMenuInput(Player player, Board board) {
 
         int playerIndex = (getCurrentTurn() % 2);
         player.setExtraTurn(false);
+        player.setIsPink(false);
         player = board.movePlayer(playerIndex, rollResults);
 
         // Handle special case for pink tile (advisor selection)
-        if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
+        if (player.getIsPink()) {
             player = advisorSelectionMenu(player);
             board.updatePlayer(playerIndex, player);
         } else if (player.getExtraTurn()) {
             int rollResults2 = roll();
             cout << endl << "Your second turn!" << endl << endl;
-            cout << "You rolled a " << rollResults << "!" << endl;
-            player = board.movePlayer(playerIndex +rollResults2, rollResults);
-            if (board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) == 'P') {
+            cout << "You rolled a " << rollResults2 << "!" << endl;
+            player = board.movePlayer(playerIndex, rollResults2);
+            if (player.getIsPink()) {
                 player = advisorSelectionMenu(player);
+                board.updatePlayer(playerIndex, player);
             }
         }
+
+        cout << board.getTileColor(playerIndex, board.getPlayerPosition(playerIndex)) << endl;
 
         board.displayBoard();
 
@@ -386,21 +390,21 @@ void Game::createLionsVector() {
 void Game::displayMenu(Player player, Board board) {
     int menu;
     bool entryValid = false;
-    
+
     system("clear");
     cout << "This is your menu. Enter the number corresponding to select what you would like to do!\n";
-    cout << "1. Review your player: Check on your health and age!\n";
+    cout << "1. Review your player: Check on your Name and age!\n";
     cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
     cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
     cout << "4. Review your Position: Check where you are on the board!\n";
     cout << "5. Review your progress: See your TOTAL Pride Points if the game ended right now. " << endl;
     cout << "6. Go Back." << endl;
-   
+
     while (!entryValid) {
         system("clear");
         cout << "Please enter a valid input." << endl;
         cout << "This is your menu. Enter the number corresponding to select what you would like to do!\n";
-        cout << "1. Review your player: Check on your health and age!\n";
+        cout << "1. Review your player: Check on your Name and age!\n";
         cout << "2. Review your player: Check on your stamina, strength, wisdom, and pride points!\n";
         cout << "3. Review your Advisor: Check on your Advisor's name and special ability!\n";
         cout << "4. Review your Position: Check where you are on the board!\n";
@@ -409,7 +413,7 @@ void Game::displayMenu(Player player, Board board) {
         cin >> menu;
         cin.clear();
         system("clear");
-        
+
         if (cin.fail()) { // Check if the input is invalid
                cout << "That is an invalid input. Please select a Lion;" << endl;
                cin.clear(); // Clear the error flag

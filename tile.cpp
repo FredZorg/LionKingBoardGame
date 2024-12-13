@@ -55,99 +55,87 @@ Player Tile::isPurple(Player player){
 //Normal tile, need to use random.txt for events, for some events an advisor will negate a negative task
 //cout each event and update each player thing
 Player Tile::isGreen(Player player) {
-    fstream file_rand;
-    file_rand.open("random_events.txt");
+    ifstream file_rand("random_events.txt");
     if (file_rand.fail()) {
-        cout << "File did not open.";
+        cout << "Error: Could not open random_events.txt" << endl;
         return player;
     }
 
     player.addGreenCounter(player);
     
+    // Count valid lines
+    vector<string> validEvents;
     string line;
-    int lines = 0;
-
-    // Count the number of lines
     while (getline(file_rand, line)) {
-        lines++;
+        if (!line.empty()) {
+            validEvents.push_back(line);
+        }
     }
-    file_rand.clear();      // Clear EOF and error flags
-    file_rand.seekg(0);     // Reset file pointer to beginning
+    
+    if (validEvents.empty()) {
+        cout << "Warning: No valid events found in random_events.txt" << endl;
+        return player;
+    }
 
-    // Loop to handle "restart" behavior
-    while (true) {
-        int randy = rand() % 2 + 1;
-        if (randy == 1) {
-            cout << "You are both unlucky and lucky, isn't that kind of not sucky." << endl;
-            return player;
-        }
+    // Random chance to skip event
+    if (rand() % 2 == 0) {
+        cout << "You are both unlucky and lucky, isn't that kind of not sucky." << endl;
+        return player;
+    }
 
-        string desc, trainOrPride, advisor, pridePoints;
-        int ranVent = rand() % lines + 1;
+    // Select and process random event
+    int randIndex = rand() % validEvents.size();
+    string selectedEvent = validEvents[randIndex];
 
-        // Read the random event
-        for (int i = 0; i < ranVent; i++) {
-            getline(file_rand, desc, '|');
-            getline(file_rand, trainOrPride, '|');
-            getline(file_rand, advisor, '|');
-            getline(file_rand, pridePoints);
-        }
+    // Parse the selected event
+    size_t pos1 = selectedEvent.find('|');
+    size_t pos2 = selectedEvent.find('|', pos1 + 1);
+    size_t pos3 = selectedEvent.find('|', pos2 + 1);
 
-        int newTrainOrPride = stoi(trainOrPride);
-        int newAdvisor = stoi(advisor);
-        int newPridePoints = stoi(pridePoints);
-        string advisorName;
+    if (pos1 != string::npos && pos2 != string::npos && pos3 != string::npos) {
+        try {
+            string desc = selectedEvent.substr(0, pos1);
+            int trainOrPride = stoi(selectedEvent.substr(pos1 + 1, pos2 - pos1 - 1));
+            int advisor = stoi(selectedEvent.substr(pos2 + 1, pos3 - pos2 - 1));
+            int pridePoints = stoi(selectedEvent.substr(pos3 + 1));
 
-        // Map newAdvisor values to advisor names
-        if (newAdvisor == 0) advisorName = "none";
-        else if (newAdvisor == 1) advisorName = "Rafiki";
-        else if (newAdvisor == 2) advisorName = "Nala";
-        else if (newAdvisor == 3) advisorName = "Surabi";
-        else if (newAdvisor == 4) advisorName = "Zazu";
-        else if (newAdvisor == 5) advisorName = "Sarafina";
-
-        // If the player's choice doesn't match, restart the loop
-        if (newTrainOrPride != player.getChoice()) {
-            continue;
-        }
-
-        // Otherwise, process the result and exit the loop
-        if (newPridePoints > 0) {
-            if (advisorName == player.getAdvisorName()) {
-                int morePride = player.getPridePoints() + newPridePoints*2;
-                player.setPridePoints(morePride);
+            if (trainOrPride == player.getChoice()) {
                 cout << desc << endl;
-                cout << "Congrats! You spun VERY well. Enjoy " << newPridePoints*2 << " more Pride Points\n";
-                cout << "Current Pride Points: " << player.getPridePoints() << endl;
+                
+                if (pridePoints > 0) {
+                    if (advisor > 0 && advisor <= 5 && player.getAdvisorName() == getAdvisorNameForNumber(advisor)) {
+                        pridePoints *= 2;
+                        cout << "Your advisor " << player.getAdvisorName() << " doubled your points!" << endl;
+                    }
+                    cout << "You gained " << pridePoints << " Pride Points!" << endl;
+                    player.addPridePoints(pridePoints);
+                } else {
+                    if (advisor > 0 && advisor <= 5 && player.getAdvisorName() == getAdvisorNameForNumber(advisor)) {
+                        cout << "Your advisor " << player.getAdvisorName() << " protected you from losing points!" << endl;
+                    } else {
+                        cout << "You lost " << -pridePoints << " Pride Points." << endl;
+                        player.addPridePoints(pridePoints);
+                    }
+                }
             }
-            else {
-                int morePride = player.getPridePoints() + newPridePoints;
-                player.setPridePoints(morePride);
-                cout << desc << endl;
-                cout << "Congrats! You spun well. Enjoy " << newPridePoints << " more Pride Points\n";
-                cout << "Current Pride Points: " << player.getPridePoints() << endl;
-            }
-            
-        } 
-        else {
-            if (advisorName == player.getAdvisorName()) {
-                cout << "Congrats! You did not spin well, but your Advisor saved you.\n";
-                cout << "You did not lose any Pride Points!\n";
-                cout << "Current Pride Points: " << player.getPridePoints() << endl;
-            } else {
-                int lossPride = player.getPridePoints() + newPridePoints;
-                player.setPridePoints(lossPride);
-                cout << "Unfortunately, you did not spin well.\n";
-                cout << "You lost " << newPridePoints << " Pride Points\n";
-                cout << "Current Pride Points: " << player.getPridePoints() << endl;
-            }
+        } catch (const exception& e) {
+            cout << "Error processing event: " << e.what() << endl;
         }
-
-        break; // Exit the loop after processing the result
     }
 
     file_rand.close();
     return player;
+}
+
+string Tile::getAdvisorNameForNumber(int number) const {
+    switch (number) {
+        case 1: return "Rafiki";
+        case 2: return "Nala";
+        case 3: return "Sarabi";
+        case 4: return "Zazu";
+        case 5: return "Sarafina";
+        default: return "";
+    }
 }
 
 void Tile::getRiddles(){

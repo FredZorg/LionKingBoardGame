@@ -26,6 +26,7 @@ Player::Player() {
     purpleCounter = 0;
     greenCounter = 0;
     redCounter = 0;
+    isPink = false;
 }
 
 Player::Player(string playerName, string name, int pride_points, int strength, int stamina, int wisdom, std::string lionAscii, std::string advisorAscii) {
@@ -108,6 +109,10 @@ bool Player::getGameIsDone(){
 
 void Player::setExtraTurn(bool thing){
     extraTurn = thing;
+}
+
+void Player::setIsPink(bool thing){
+    isPink = thing;
 }
 
 // setters (should i error check?)
@@ -208,4 +213,8 @@ void Player::addRedCounter(Player player){
 
 bool Player::getExtraTurn(){
     return extraTurn;
+}
+
+bool Player::getIsPink(){
+    return isPink;
 }
